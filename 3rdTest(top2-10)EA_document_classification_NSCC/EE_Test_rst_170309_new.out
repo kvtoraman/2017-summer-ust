@@ -1,0 +1,253 @@
+
+======================================================
+Classification of text documents using sparse features
+======================================================
+
+This is an example showing how scikit-learn can be used to classify documents
+by topics using a bag-of-words approach. This example uses a scipy.sparse
+matrix to store the features and demonstrates various classifiers that can
+efficiently handle sparse matrices.
+
+
+Usage: document_classification_NSCC.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  --report              Print a detailed classification report.
+  --chi2_select=SELECT_CHI2
+                        Select some number of features using a chi-squared
+                        test
+  --confusion_matrix    Print the confusion matrix.
+  --top10               Print ten most discriminative terms per class for
+                        every classifier.
+  --all_categories      Whether to use all categories or not.
+  --use_hashing         Use a hashing vectorizer.
+  --n_features=N_FEATURES
+                        n_features when using the hashing vectorizer.
+  --filtered            Remove newsgroup information that is easily overfit:
+                        headers, signatures, and quoting.
+
+Loading NSCC  dataset for categories:
+['ED10', 'ED11', 'EI02', 'EI03', 'EI06', 'EI07', 'EI05', 'EI08', 'EH06', 'EF99', 'EB01', 'EA09', 'EE11', 'EE10', 'EE13', 'EE12', 'EI99', 'EE14', 'EA04', 'EA05', 'ED07', 'ED06', 'ED05', 'ED04', 'ED03', 'ED01', 'EE99', 'ED08', 'EA02', 'EH10', 'EI11', 'EI12', 'EA14', 'EA11', 'EA10', 'EA13', 'EA07', 'EF05', 'EF06', 'ED99', 'EE08', 'EE09', 'EE06', 'EE07', 'EE04', 'EE05', 'EE02', 'EE03', 'EE01']
+7107 4857
+data loaded
+Extracting features from the training data using a sparse vectorizer
+n_samples: 7107, n_features: 14452
+
+Extracting features from the test data using the same vectorizer
+n_samples: 4857, n_features: 14452
+
+================================================================================
+Ridge Classifier
+________________________________________________________________________________
+Training: 
+RidgeClassifier(alpha=1.0, class_weight=None, copy_X=True, fit_intercept=True,
+        max_iter=None, normalize=False, random_state=None, solver='auto',
+        tol=0.01)
+train time: 0.971s
+['EE01' 'EE07' 'EE02' ..., 'EE02' 'EE06' 'EE01']
+test time:  0.011s
+Precision:   0.535
+Macro F1:   0.215
+Micro F1:   0.535
+             precision    recall  f1-score   support
+
+       ED10       0.00      0.00      0.00        14
+       ED11       0.43      0.10      0.16        31
+       EI02       0.50      0.14      0.22         7
+       EI03       0.67      0.25      0.36         8
+       EI06       0.00      0.00      0.00         9
+       EI07       0.00      0.00      0.00         6
+       EI05       0.00      0.00      0.00        19
+       EI08       0.00      0.00      0.00         9
+       EH06       0.00      0.00      0.00         7
+       EF99       0.50      0.12      0.20         8
+       EB01       0.00      0.00      0.00         5
+       EA09       0.67      0.24      0.35        17
+       EE11       0.55      0.52      0.53       281
+       EE10       0.48      0.23      0.31       217
+       EE13       0.37      0.46      0.41       107
+       EE12       0.56      0.46      0.51        95
+       EI99       0.50      0.14      0.22         7
+       EE14       0.46      0.13      0.21        45
+       EA04       0.00      0.00      0.00         6
+       EA05       0.67      0.06      0.11        35
+       ED07       0.00      0.00      0.00        15
+       ED06       0.25      0.05      0.08        21
+       ED05       0.25      0.06      0.10        31
+       ED04       0.45      0.15      0.23        65
+       ED03       0.00      0.00      0.00         8
+       ED01       0.50      0.26      0.34        23
+       EE99       0.51      0.44      0.47       310
+       ED08       0.40      0.08      0.13        53
+       EA02       0.00      0.00      0.00        12
+       EH10       0.00      0.00      0.00         9
+       EI11       0.50      0.19      0.27        16
+       EI12       0.00      0.00      0.00         7
+       EA14       0.00      0.00      0.00         9
+       EA11       0.00      0.00      0.00         9
+       EA10       0.00      0.00      0.00        15
+       EA13       0.00      0.00      0.00         7
+       EA07       0.00      0.00      0.00         8
+       EF05       0.36      0.19      0.25        21
+       EF06       0.00      0.00      0.00         9
+       ED99       0.20      0.03      0.05        32
+       EE08       0.54      0.33      0.41       113
+       EE09       0.45      0.45      0.45       249
+       EE06       0.63      0.61      0.62       322
+       EE07       0.61      0.56      0.58       112
+       EE04       0.70      0.47      0.56       125
+       EE05       0.59      0.50      0.54       109
+       EE02       0.51      0.79      0.62      1217
+       EE03       0.61      0.70      0.65       327
+       EE01       0.59      0.62      0.60       670
+
+avg / total       0.51      0.54      0.50      4857
+
+dimensionality: 14452
+density: 1.000000
+
+
+================================================================================
+L2 penalty
+________________________________________________________________________________
+Training: 
+LinearSVC(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.001,
+     verbose=0)
+train time: 0.609s
+['EE01' 'EE07' 'EE02' ..., 'EE02' 'EE06' 'EE01']
+test time:  0.007s
+Precision:   0.534
+Macro F1:   0.235
+Micro F1:   0.534
+             precision    recall  f1-score   support
+
+       ED10       0.33      0.07      0.12        14
+       ED11       0.43      0.10      0.16        31
+       EI02       0.00      0.00      0.00         7
+       EI03       0.67      0.25      0.36         8
+       EI06       0.00      0.00      0.00         9
+       EI07       0.00      0.00      0.00         6
+       EI05       0.00      0.00      0.00        19
+       EI08       0.00      0.00      0.00         9
+       EH06       0.00      0.00      0.00         7
+       EF99       0.50      0.12      0.20         8
+       EB01       0.00      0.00      0.00         5
+       EA09       0.67      0.24      0.35        17
+       EE11       0.52      0.53      0.53       281
+       EE10       0.46      0.25      0.32       217
+       EE13       0.36      0.49      0.41       107
+       EE12       0.55      0.51      0.52        95
+       EI99       0.50      0.14      0.22         7
+       EE14       0.46      0.13      0.21        45
+       EA04       0.50      0.17      0.25         6
+       EA05       0.50      0.09      0.15        35
+       ED07       0.50      0.07      0.12        15
+       ED06       0.25      0.05      0.08        21
+       ED05       0.25      0.06      0.10        31
+       ED04       0.44      0.18      0.26        65
+       ED03       0.50      0.12      0.20         8
+       ED01       0.47      0.30      0.37        23
+       EE99       0.51      0.45      0.48       310
+       ED08       0.40      0.08      0.13        53
+       EA02       0.00      0.00      0.00        12
+       EH10       0.00      0.00      0.00         9
+       EI11       0.50      0.19      0.27        16
+       EI12       0.00      0.00      0.00         7
+       EA14       0.00      0.00      0.00         9
+       EA11       0.33      0.11      0.17         9
+       EA10       0.00      0.00      0.00        15
+       EA13       0.00      0.00      0.00         7
+       EA07       0.33      0.12      0.18         8
+       EF05       0.33      0.19      0.24        21
+       EF06       0.00      0.00      0.00         9
+       ED99       0.29      0.06      0.10        32
+       EE08       0.53      0.35      0.42       113
+       EE09       0.41      0.46      0.43       249
+       EE06       0.64      0.60      0.62       322
+       EE07       0.56      0.56      0.56       112
+       EE04       0.67      0.52      0.59       125
+       EE05       0.60      0.50      0.55       109
+       EE02       0.52      0.75      0.61      1217
+       EE03       0.61      0.70      0.65       327
+       EE01       0.59      0.63      0.61       670
+
+avg / total       0.51      0.53      0.51      4857
+
+dimensionality: 14452
+density: 1.000000
+
+
+________________________________________________________________________________
+Training: 
+SGDClassifier(alpha=0.0001, average=False, class_weight=None, epsilon=0.1,
+       eta0=0.0, fit_intercept=True, l1_ratio=0.15,
+       learning_rate='optimal', loss='modified_huber', n_iter=50, n_jobs=1,
+       penalty='elasticnet', power_t=0.5, random_state=None, shuffle=True,
+       verbose=0, warm_start=False)
+train time: 1.765s
+['EE01' 'EE07' 'EE02' ..., 'EE02' 'EE04' 'EE01']
+test time:  0.012s
+Precision:   0.530
+Macro F1:   0.242
+Micro F1:   0.530
+             precision    recall  f1-score   support
+
+       ED10       0.33      0.07      0.12        14
+       ED11       0.44      0.13      0.20        31
+       EI02       0.00      0.00      0.00         7
+       EI03       0.67      0.25      0.36         8
+       EI06       0.00      0.00      0.00         9
+       EI07       0.00      0.00      0.00         6
+       EI05       0.38      0.16      0.22        19
+       EI08       0.00      0.00      0.00         9
+       EH06       0.50      0.43      0.46         7
+       EF99       0.50      0.12      0.20         8
+       EB01       0.00      0.00      0.00         5
+       EA09       0.67      0.12      0.20        17
+       EE11       0.53      0.49      0.51       281
+       EE10       0.48      0.25      0.33       217
+       EE13       0.36      0.47      0.41       107
+       EE12       0.55      0.45      0.50        95
+       EI99       0.50      0.14      0.22         7
+       EE14       0.38      0.18      0.24        45
+       EA04       0.50      0.17      0.25         6
+       EA05       0.50      0.09      0.15        35
+       ED07       0.50      0.07      0.12        15
+       ED06       0.25      0.05      0.08        21
+       ED05       0.22      0.06      0.10        31
+       ED04       0.44      0.17      0.24        65
+       ED03       0.00      0.00      0.00         8
+       ED01       0.50      0.30      0.38        23
+       EE99       0.49      0.46      0.48       310
+       ED08       0.40      0.08      0.13        53
+       EA02       0.00      0.00      0.00        12
+       EH10       0.00      0.00      0.00         9
+       EI11       0.60      0.19      0.29        16
+       EI12       0.00      0.00      0.00         7
+       EA14       0.00      0.00      0.00         9
+       EA11       0.33      0.11      0.17         9
+       EA10       0.00      0.00      0.00        15
+       EA13       0.00      0.00      0.00         7
+       EA07       0.33      0.12      0.18         8
+       EF05       0.25      0.14      0.18        21
+       EF06       0.00      0.00      0.00         9
+       ED99       0.29      0.06      0.10        32
+       EE08       0.52      0.38      0.44       113
+       EE09       0.40      0.50      0.45       249
+       EE06       0.64      0.58      0.61       322
+       EE07       0.55      0.57      0.56       112
+       EE04       0.63      0.55      0.59       125
+       EE05       0.58      0.52      0.55       109
+       EE02       0.52      0.74      0.61      1217
+       EE03       0.62      0.69      0.65       327
+       EE01       0.59      0.61      0.60       670
+
+avg / total       0.51      0.53      0.51      4857
+
+dimensionality: 14452
+density: 0.066630
+
+

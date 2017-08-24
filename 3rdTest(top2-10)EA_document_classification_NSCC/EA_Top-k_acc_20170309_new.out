@@ -1,0 +1,1111 @@
+
+======================================================
+Classification of text documents using sparse features
+======================================================
+
+This is an example showing how scikit-learn can be used to classify documents
+by topics using a bag-of-words approach. This example uses a scipy.sparse
+matrix to store the features and demonstrates various classifiers that can
+efficiently handle sparse matrices.
+
+
+Usage: document_classification_NSCC_Top5.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  --report              Print a detailed classification report.
+  --chi2_select=SELECT_CHI2
+                        Select some number of features using a chi-squared
+                        test
+  --confusion_matrix    Print the confusion matrix.
+  --top10               Print ten most discriminative terms per class for
+                        every classifier.
+  --all_categories      Whether to use all categories or not.
+  --use_hashing         Use a hashing vectorizer.
+  --n_features=N_FEATURES
+                        n_features when using the hashing vectorizer.
+  --filtered            Remove newsgroup information that is easily overfit:
+                        headers, signatures, and quoting.
+
+Loading NSCC	 dataset for categories:
+['EA99', 'EI02', 'EI03', 'EI01', 'EI06', 'EI07', 'EI04', 'EI05', 'EG08', 'EI08', 'EI09', 'EG09', 'EA08', 'EA09', 'EA02', 'EA03', 'EA01', 'EA06', 'EA07', 'EA04', 'EA05', 'EC10', 'EE99', 'EB08', 'EF99', 'EI11', 'EI10', 'EI12', 'EA15', 'EA14', 'EA11', 'EA10', 'EA13', 'EB99', 'EA12', 'EE08', 'EE09', 'EE06', 'EE07', 'EE04', 'EE05', 'EE02', 'EE03', 'EE01', 'EB01', 'EB03', 'EB02', 'EB05', 'EB04', 'EB07', 'EB06', 'EE11', 'EE10', 'EE13', 'EE12', 'EI99', 'EE14', 'EC08', 'EC09', 'EC01', 'EC02', 'EC03', 'EC04', 'EC05', 'EC06', 'EC07', 'EF05', 'EF04', 'EF06', 'EF01', 'EF03', 'EF02', 'ED10', 'ED11', 'EG04', 'EG05', 'EG06', 'EG07', 'EG01', 'EG02', 'EG03', 'ED07', 'ED06', 'ED05', 'ED04', 'ED03', 'ED02', 'ED01', 'ED09', 'ED08', 'EH10', 'EH11', 'EH12', 'EH13', 'EH14', 'EH15', 'EG99', 'EC99', 'ED99', 'EC11', 'EH09', 'EH08', 'EH03', 'EH02', 'EH01', 'EH07', 'EH06', 'EH05', 'EH04', 'EH99', 'EG10']
+34787 23458
+data loaded
+Extracting features from the training data using a sparse vectorizer
+n_samples: 34787, n_features: 53450
+
+Extracting features from the test data using the same vectorizer
+n_samples: 23458, n_features: 53450
+
+================================================================================
+L2 penalty
+________________________________________________________________________________
+Training: 
+SGDClassifier(alpha=0.0001, average=False, class_weight=None, epsilon=0.1,
+       eta0=0.0, fit_intercept=True, l1_ratio=0.15,
+       learning_rate='optimal', loss='modified_huber', n_iter=10, n_jobs=1,
+       penalty='elasticnet', power_t=0.5, random_state=None, shuffle=True,
+       verbose=0, warm_start=False)
+train time: 5.297s
+test time:  0.231s
+Top- 2
+	 EA99 Acc.: 0.253424657534 Correct: 37.0 Tested: 146.0
+	 EI02 Acc.: 0.422018348624 Correct: 46.0 Tested: 109.0
+	 EI03 Acc.: 0.743455497382 Correct: 284.0 Tested: 382.0
+	 EI01 Acc.: 0.531914893617 Correct: 50.0 Tested: 94.0
+	 EI06 Acc.: 0.601694915254 Correct: 71.0 Tested: 118.0
+	 EI07 Acc.: 0.391304347826 Correct: 9.0 Tested: 23.0
+	 EI04 Acc.: 0.775818639798 Correct: 308.0 Tested: 397.0
+	 EI05 Acc.: 0.541984732824 Correct: 71.0 Tested: 131.0
+	 ED10 Acc.: 0.6875 Correct: 242.0 Tested: 352.0
+	 EI08 Acc.: 0.428571428571 Correct: 18.0 Tested: 42.0
+	 EI09 Acc.: 0.73381294964 Correct: 102.0 Tested: 139.0
+	 ED11 Acc.: 0.327433628319 Correct: 37.0 Tested: 113.0
+	 EA08 Acc.: 0.419540229885 Correct: 146.0 Tested: 348.0
+	 EA09 Acc.: 0.756062767475 Correct: 530.0 Tested: 701.0
+	 EA02 Acc.: 0.465789473684 Correct: 177.0 Tested: 380.0
+	 EA03 Acc.: 0.508090614887 Correct: 157.0 Tested: 309.0
+	 EA01 Acc.: 0.502164502165 Correct: 116.0 Tested: 231.0
+	 EA06 Acc.: 0.623145400593 Correct: 210.0 Tested: 337.0
+	 EA07 Acc.: 0.531590413943 Correct: 244.0 Tested: 459.0
+	 EA04 Acc.: 0.512635379061 Correct: 142.0 Tested: 277.0
+	 EA05 Acc.: 0.654804270463 Correct: 368.0 Tested: 562.0
+	 EG07 Acc.: 0.796680497925 Correct: 192.0 Tested: 241.0
+	 EE99 Acc.: 0.506451612903 Correct: 157.0 Tested: 310.0
+	 EE10 Acc.: 0.364055299539 Correct: 79.0 Tested: 217.0
+	 EF99 Acc.: 0.383763837638 Correct: 104.0 Tested: 271.0
+	 EI11 Acc.: 0.622950819672 Correct: 152.0 Tested: 244.0
+	 EI10 Acc.: 0.611111111111 Correct: 33.0 Tested: 54.0
+	 EI12 Acc.: 0.595348837209 Correct: 128.0 Tested: 215.0
+	 EA15 Acc.: 0.272727272727 Correct: 6.0 Tested: 22.0
+	 EA14 Acc.: 0.48 Correct: 48.0 Tested: 100.0
+	 EA11 Acc.: 0.6 Correct: 84.0 Tested: 140.0
+	 EA10 Acc.: 0.803069053708 Correct: 314.0 Tested: 391.0
+	 EA13 Acc.: 0.738095238095 Correct: 62.0 Tested: 84.0
+	 EB99 Acc.: 0.25748502994 Correct: 43.0 Tested: 167.0
+	 EA12 Acc.: 0.655172413793 Correct: 38.0 Tested: 58.0
+	 EE08 Acc.: 0.407079646018 Correct: 46.0 Tested: 113.0
+	 EE09 Acc.: 0.602409638554 Correct: 150.0 Tested: 249.0
+	 EE06 Acc.: 0.689440993789 Correct: 222.0 Tested: 322.0
+	 EE07 Acc.: 0.642857142857 Correct: 72.0 Tested: 112.0
+	 EE04 Acc.: 0.592 Correct: 74.0 Tested: 125.0
+	 EE05 Acc.: 0.596330275229 Correct: 65.0 Tested: 109.0
+	 EE02 Acc.: 0.833196384552 Correct: 1014.0 Tested: 1217.0
+	 EE03 Acc.: 0.801829268293 Correct: 263.0 Tested: 328.0
+	 EE01 Acc.: 0.735820895522 Correct: 493.0 Tested: 670.0
+	 EB01 Acc.: 0.587248322148 Correct: 350.0 Tested: 596.0
+	 EB03 Acc.: 0.699857752489 Correct: 492.0 Tested: 703.0
+	 EB02 Acc.: 0.623800383877 Correct: 325.0 Tested: 521.0
+	 EB05 Acc.: 0.401709401709 Correct: 47.0 Tested: 117.0
+	 EB04 Acc.: 0.553398058252 Correct: 57.0 Tested: 103.0
+	 EB07 Acc.: 0.328571428571 Correct: 46.0 Tested: 140.0
+	 EB06 Acc.: 0.377990430622 Correct: 79.0 Tested: 209.0
+	 EE11 Acc.: 0.480427046263 Correct: 135.0 Tested: 281.0
+	 EB08 Acc.: 0.272727272727 Correct: 9.0 Tested: 33.0
+	 EE13 Acc.: 0.448598130841 Correct: 48.0 Tested: 107.0
+	 EE12 Acc.: 0.515789473684 Correct: 49.0 Tested: 95.0
+	 EI99 Acc.: 0.369369369369 Correct: 41.0 Tested: 111.0
+	 EE14 Acc.: 0.288888888889 Correct: 13.0 Tested: 45.0
+	 EC08 Acc.: 0.384615384615 Correct: 15.0 Tested: 39.0
+	 EC09 Acc.: 0.703296703297 Correct: 128.0 Tested: 182.0
+	 EC01 Acc.: 0.575438596491 Correct: 164.0 Tested: 285.0
+	 EC02 Acc.: 0.473684210526 Correct: 198.0 Tested: 418.0
+	 EC03 Acc.: 0.454106280193 Correct: 94.0 Tested: 207.0
+	 EC04 Acc.: 0.672619047619 Correct: 113.0 Tested: 168.0
+	 EC05 Acc.: 0.524861878453 Correct: 95.0 Tested: 181.0
+	 EC06 Acc.: 0.367816091954 Correct: 32.0 Tested: 87.0
+	 EC07 Acc.: 0.535714285714 Correct: 60.0 Tested: 112.0
+	 EF05 Acc.: 0.657142857143 Correct: 138.0 Tested: 210.0
+	 EF04 Acc.: 0.55 Correct: 77.0 Tested: 140.0
+	 EF06 Acc.: 0.832644628099 Correct: 806.0 Tested: 968.0
+	 EF01 Acc.: 0.684684684685 Correct: 76.0 Tested: 111.0
+	 EF03 Acc.: 0.620689655172 Correct: 54.0 Tested: 87.0
+	 EF02 Acc.: 0.706349206349 Correct: 89.0 Tested: 126.0
+	 EG08 Acc.: 0.313725490196 Correct: 16.0 Tested: 51.0
+	 EG09 Acc.: 0.654545454545 Correct: 36.0 Tested: 55.0
+	 EG04 Acc.: 0.554794520548 Correct: 81.0 Tested: 146.0
+	 EG05 Acc.: 0.568965517241 Correct: 33.0 Tested: 58.0
+	 EG06 Acc.: 0.793103448276 Correct: 69.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.808510638298 Correct: 38.0 Tested: 47.0
+	 EG02 Acc.: 0.614285714286 Correct: 43.0 Tested: 70.0
+	 EG03 Acc.: 0.426229508197 Correct: 26.0 Tested: 61.0
+	 ED07 Acc.: 0.478087649402 Correct: 120.0 Tested: 251.0
+	 ED06 Acc.: 0.458483754513 Correct: 127.0 Tested: 277.0
+	 ED05 Acc.: 0.311688311688 Correct: 120.0 Tested: 385.0
+	 ED04 Acc.: 0.762589928058 Correct: 530.0 Tested: 695.0
+	 ED03 Acc.: 0.602339181287 Correct: 206.0 Tested: 342.0
+	 ED02 Acc.: 0.653594771242 Correct: 100.0 Tested: 153.0
+	 ED01 Acc.: 0.661616161616 Correct: 262.0 Tested: 396.0
+	 ED09 Acc.: 0.764705882353 Correct: 156.0 Tested: 204.0
+	 ED08 Acc.: 0.522522522523 Correct: 116.0 Tested: 222.0
+	 EH10 Acc.: 0.5 Correct: 46.0 Tested: 92.0
+	 EH11 Acc.: 0.170212765957 Correct: 16.0 Tested: 94.0
+	 EH12 Acc.: 0.236363636364 Correct: 13.0 Tested: 55.0
+	 EH13 Acc.: 0.266666666667 Correct: 16.0 Tested: 60.0
+	 EH14 Acc.: 0.2 Correct: 8.0 Tested: 40.0
+	 EH15 Acc.: 0.214285714286 Correct: 3.0 Tested: 14.0
+	 EG99 Acc.: 0.754838709677 Correct: 117.0 Tested: 155.0
+	 EC99 Acc.: 0.525 Correct: 21.0 Tested: 40.0
+	 ED99 Acc.: 0.297959183673 Correct: 73.0 Tested: 245.0
+	 EC11 Acc.: 0.285714285714 Correct: 2.0 Tested: 7.0
+	 EH09 Acc.: 0.65873015873 Correct: 83.0 Tested: 126.0
+	 EH08 Acc.: 0.492307692308 Correct: 32.0 Tested: 65.0
+	 EH03 Acc.: 0.77 Correct: 77.0 Tested: 100.0
+	 EH02 Acc.: 0.775 Correct: 248.0 Tested: 320.0
+	 EH01 Acc.: 0.703125 Correct: 135.0 Tested: 192.0
+	 EH07 Acc.: 0.663414634146 Correct: 136.0 Tested: 205.0
+	 EH06 Acc.: 0.709090909091 Correct: 78.0 Tested: 110.0
+	 EH05 Acc.: 0.535714285714 Correct: 15.0 Tested: 28.0
+	 EH04 Acc.: 0.575757575758 Correct: 38.0 Tested: 66.0
+	 EH99 Acc.: 0.492063492063 Correct: 31.0 Tested: 63.0
+	 EG10 Acc.: 0.739130434783 Correct: 51.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.612115269844
+Macro Acc.(class level) 0.545415934801 
+
+
+test time:  0.351s
+Top- 3
+	 EA99 Acc.: 0.308219178082 Correct: 45.0 Tested: 146.0
+	 EI02 Acc.: 0.532110091743 Correct: 58.0 Tested: 109.0
+	 EI03 Acc.: 0.80890052356 Correct: 309.0 Tested: 382.0
+	 EI01 Acc.: 0.574468085106 Correct: 54.0 Tested: 94.0
+	 EI06 Acc.: 0.686440677966 Correct: 81.0 Tested: 118.0
+	 EI07 Acc.: 0.434782608696 Correct: 10.0 Tested: 23.0
+	 EI04 Acc.: 0.808564231738 Correct: 321.0 Tested: 397.0
+	 EI05 Acc.: 0.625954198473 Correct: 82.0 Tested: 131.0
+	 ED10 Acc.: 0.732954545455 Correct: 258.0 Tested: 352.0
+	 EI08 Acc.: 0.5 Correct: 21.0 Tested: 42.0
+	 EI09 Acc.: 0.791366906475 Correct: 110.0 Tested: 139.0
+	 ED11 Acc.: 0.53982300885 Correct: 61.0 Tested: 113.0
+	 EA08 Acc.: 0.497126436782 Correct: 173.0 Tested: 348.0
+	 EA09 Acc.: 0.803138373752 Correct: 563.0 Tested: 701.0
+	 EA02 Acc.: 0.544736842105 Correct: 207.0 Tested: 380.0
+	 EA03 Acc.: 0.592233009709 Correct: 183.0 Tested: 309.0
+	 EA01 Acc.: 0.580086580087 Correct: 134.0 Tested: 231.0
+	 EA06 Acc.: 0.709198813056 Correct: 239.0 Tested: 337.0
+	 EA07 Acc.: 0.616557734205 Correct: 283.0 Tested: 459.0
+	 EA04 Acc.: 0.58844765343 Correct: 163.0 Tested: 277.0
+	 EA05 Acc.: 0.724199288256 Correct: 407.0 Tested: 562.0
+	 EG07 Acc.: 0.842323651452 Correct: 203.0 Tested: 241.0
+	 EE99 Acc.: 0.606451612903 Correct: 188.0 Tested: 310.0
+	 EE10 Acc.: 0.534562211982 Correct: 116.0 Tested: 217.0
+	 EF99 Acc.: 0.505535055351 Correct: 137.0 Tested: 271.0
+	 EI11 Acc.: 0.754098360656 Correct: 184.0 Tested: 244.0
+	 EI10 Acc.: 0.648148148148 Correct: 35.0 Tested: 54.0
+	 EI12 Acc.: 0.674418604651 Correct: 145.0 Tested: 215.0
+	 EA15 Acc.: 0.363636363636 Correct: 8.0 Tested: 22.0
+	 EA14 Acc.: 0.51 Correct: 51.0 Tested: 100.0
+	 EA11 Acc.: 0.678571428571 Correct: 95.0 Tested: 140.0
+	 EA10 Acc.: 0.846547314578 Correct: 331.0 Tested: 391.0
+	 EA13 Acc.: 0.833333333333 Correct: 70.0 Tested: 84.0
+	 EB99 Acc.: 0.317365269461 Correct: 53.0 Tested: 167.0
+	 EA12 Acc.: 0.741379310345 Correct: 43.0 Tested: 58.0
+	 EE08 Acc.: 0.495575221239 Correct: 56.0 Tested: 113.0
+	 EE09 Acc.: 0.686746987952 Correct: 171.0 Tested: 249.0
+	 EE06 Acc.: 0.742236024845 Correct: 239.0 Tested: 322.0
+	 EE07 Acc.: 0.767857142857 Correct: 86.0 Tested: 112.0
+	 EE04 Acc.: 0.752 Correct: 94.0 Tested: 125.0
+	 EE05 Acc.: 0.651376146789 Correct: 71.0 Tested: 109.0
+	 EE02 Acc.: 0.875924404273 Correct: 1066.0 Tested: 1217.0
+	 EE03 Acc.: 0.832317073171 Correct: 273.0 Tested: 328.0
+	 EE01 Acc.: 0.791044776119 Correct: 530.0 Tested: 670.0
+	 EB01 Acc.: 0.687919463087 Correct: 410.0 Tested: 596.0
+	 EB03 Acc.: 0.769559032717 Correct: 541.0 Tested: 703.0
+	 EB02 Acc.: 0.721689059501 Correct: 376.0 Tested: 521.0
+	 EB05 Acc.: 0.564102564103 Correct: 66.0 Tested: 117.0
+	 EB04 Acc.: 0.650485436893 Correct: 67.0 Tested: 103.0
+	 EB07 Acc.: 0.442857142857 Correct: 62.0 Tested: 140.0
+	 EB06 Acc.: 0.488038277512 Correct: 102.0 Tested: 209.0
+	 EE11 Acc.: 0.615658362989 Correct: 173.0 Tested: 281.0
+	 EB08 Acc.: 0.393939393939 Correct: 13.0 Tested: 33.0
+	 EE13 Acc.: 0.579439252336 Correct: 62.0 Tested: 107.0
+	 EE12 Acc.: 0.694736842105 Correct: 66.0 Tested: 95.0
+	 EI99 Acc.: 0.504504504505 Correct: 56.0 Tested: 111.0
+	 EE14 Acc.: 0.4 Correct: 18.0 Tested: 45.0
+	 EC08 Acc.: 0.512820512821 Correct: 20.0 Tested: 39.0
+	 EC09 Acc.: 0.78021978022 Correct: 142.0 Tested: 182.0
+	 EC01 Acc.: 0.673684210526 Correct: 192.0 Tested: 285.0
+	 EC02 Acc.: 0.645933014354 Correct: 270.0 Tested: 418.0
+	 EC03 Acc.: 0.589371980676 Correct: 122.0 Tested: 207.0
+	 EC04 Acc.: 0.755952380952 Correct: 127.0 Tested: 168.0
+	 EC05 Acc.: 0.618784530387 Correct: 112.0 Tested: 181.0
+	 EC06 Acc.: 0.402298850575 Correct: 35.0 Tested: 87.0
+	 EC07 Acc.: 0.678571428571 Correct: 76.0 Tested: 112.0
+	 EF05 Acc.: 0.747619047619 Correct: 157.0 Tested: 210.0
+	 EF04 Acc.: 0.7 Correct: 98.0 Tested: 140.0
+	 EF06 Acc.: 0.869834710744 Correct: 842.0 Tested: 968.0
+	 EF01 Acc.: 0.801801801802 Correct: 89.0 Tested: 111.0
+	 EF03 Acc.: 0.735632183908 Correct: 64.0 Tested: 87.0
+	 EF02 Acc.: 0.753968253968 Correct: 95.0 Tested: 126.0
+	 EG08 Acc.: 0.411764705882 Correct: 21.0 Tested: 51.0
+	 EG09 Acc.: 0.763636363636 Correct: 42.0 Tested: 55.0
+	 EG04 Acc.: 0.664383561644 Correct: 97.0 Tested: 146.0
+	 EG05 Acc.: 0.706896551724 Correct: 41.0 Tested: 58.0
+	 EG06 Acc.: 0.850574712644 Correct: 74.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.829787234043 Correct: 39.0 Tested: 47.0
+	 EG02 Acc.: 0.685714285714 Correct: 48.0 Tested: 70.0
+	 EG03 Acc.: 0.508196721311 Correct: 31.0 Tested: 61.0
+	 ED07 Acc.: 0.541832669323 Correct: 136.0 Tested: 251.0
+	 ED06 Acc.: 0.530685920578 Correct: 147.0 Tested: 277.0
+	 ED05 Acc.: 0.415584415584 Correct: 160.0 Tested: 385.0
+	 ED04 Acc.: 0.814388489209 Correct: 566.0 Tested: 695.0
+	 ED03 Acc.: 0.687134502924 Correct: 235.0 Tested: 342.0
+	 ED02 Acc.: 0.699346405229 Correct: 107.0 Tested: 153.0
+	 ED01 Acc.: 0.732323232323 Correct: 290.0 Tested: 396.0
+	 ED09 Acc.: 0.823529411765 Correct: 168.0 Tested: 204.0
+	 ED08 Acc.: 0.626126126126 Correct: 139.0 Tested: 222.0
+	 EH10 Acc.: 0.608695652174 Correct: 56.0 Tested: 92.0
+	 EH11 Acc.: 0.234042553191 Correct: 22.0 Tested: 94.0
+	 EH12 Acc.: 0.345454545455 Correct: 19.0 Tested: 55.0
+	 EH13 Acc.: 0.35 Correct: 21.0 Tested: 60.0
+	 EH14 Acc.: 0.3 Correct: 12.0 Tested: 40.0
+	 EH15 Acc.: 0.285714285714 Correct: 4.0 Tested: 14.0
+	 EG99 Acc.: 0.81935483871 Correct: 127.0 Tested: 155.0
+	 EC99 Acc.: 0.6 Correct: 24.0 Tested: 40.0
+	 ED99 Acc.: 0.351020408163 Correct: 86.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.730158730159 Correct: 92.0 Tested: 126.0
+	 EH08 Acc.: 0.584615384615 Correct: 38.0 Tested: 65.0
+	 EH03 Acc.: 0.81 Correct: 81.0 Tested: 100.0
+	 EH02 Acc.: 0.821875 Correct: 263.0 Tested: 320.0
+	 EH01 Acc.: 0.744791666667 Correct: 143.0 Tested: 192.0
+	 EH07 Acc.: 0.746341463415 Correct: 153.0 Tested: 205.0
+	 EH06 Acc.: 0.736363636364 Correct: 81.0 Tested: 110.0
+	 EH05 Acc.: 0.571428571429 Correct: 16.0 Tested: 28.0
+	 EH04 Acc.: 0.636363636364 Correct: 42.0 Tested: 66.0
+	 EH99 Acc.: 0.555555555556 Correct: 35.0 Tested: 63.0
+	 EG10 Acc.: 0.739130434783 Correct: 51.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.689615482991
+Macro Acc.(class level) 0.629323384539 
+
+
+test time:  0.469s
+Top- 4
+	 EA99 Acc.: 0.356164383562 Correct: 52.0 Tested: 146.0
+	 EI02 Acc.: 0.614678899083 Correct: 67.0 Tested: 109.0
+	 EI03 Acc.: 0.835078534031 Correct: 319.0 Tested: 382.0
+	 EI01 Acc.: 0.63829787234 Correct: 60.0 Tested: 94.0
+	 EI06 Acc.: 0.728813559322 Correct: 86.0 Tested: 118.0
+	 EI07 Acc.: 0.478260869565 Correct: 11.0 Tested: 23.0
+	 EI04 Acc.: 0.818639798489 Correct: 325.0 Tested: 397.0
+	 EI05 Acc.: 0.656488549618 Correct: 86.0 Tested: 131.0
+	 ED10 Acc.: 0.767045454545 Correct: 270.0 Tested: 352.0
+	 EI08 Acc.: 0.5 Correct: 21.0 Tested: 42.0
+	 EI09 Acc.: 0.834532374101 Correct: 116.0 Tested: 139.0
+	 ED11 Acc.: 0.58407079646 Correct: 66.0 Tested: 113.0
+	 EA08 Acc.: 0.586206896552 Correct: 204.0 Tested: 348.0
+	 EA09 Acc.: 0.827389443652 Correct: 580.0 Tested: 701.0
+	 EA02 Acc.: 0.594736842105 Correct: 226.0 Tested: 380.0
+	 EA03 Acc.: 0.653721682848 Correct: 202.0 Tested: 309.0
+	 EA01 Acc.: 0.601731601732 Correct: 139.0 Tested: 231.0
+	 EA06 Acc.: 0.747774480712 Correct: 252.0 Tested: 337.0
+	 EA07 Acc.: 0.677559912854 Correct: 311.0 Tested: 459.0
+	 EA04 Acc.: 0.624548736462 Correct: 173.0 Tested: 277.0
+	 EA05 Acc.: 0.759786476868 Correct: 427.0 Tested: 562.0
+	 EG07 Acc.: 0.875518672199 Correct: 211.0 Tested: 241.0
+	 EE99 Acc.: 0.654838709677 Correct: 203.0 Tested: 310.0
+	 EE10 Acc.: 0.635944700461 Correct: 138.0 Tested: 217.0
+	 EF99 Acc.: 0.590405904059 Correct: 160.0 Tested: 271.0
+	 EI11 Acc.: 0.790983606557 Correct: 193.0 Tested: 244.0
+	 EI10 Acc.: 0.666666666667 Correct: 36.0 Tested: 54.0
+	 EI12 Acc.: 0.706976744186 Correct: 152.0 Tested: 215.0
+	 EA15 Acc.: 0.454545454545 Correct: 10.0 Tested: 22.0
+	 EA14 Acc.: 0.6 Correct: 60.0 Tested: 100.0
+	 EA11 Acc.: 0.692857142857 Correct: 97.0 Tested: 140.0
+	 EA10 Acc.: 0.86189258312 Correct: 337.0 Tested: 391.0
+	 EA13 Acc.: 0.857142857143 Correct: 72.0 Tested: 84.0
+	 EB99 Acc.: 0.365269461078 Correct: 61.0 Tested: 167.0
+	 EA12 Acc.: 0.758620689655 Correct: 44.0 Tested: 58.0
+	 EE08 Acc.: 0.557522123894 Correct: 63.0 Tested: 113.0
+	 EE09 Acc.: 0.751004016064 Correct: 187.0 Tested: 249.0
+	 EE06 Acc.: 0.785714285714 Correct: 253.0 Tested: 322.0
+	 EE07 Acc.: 0.785714285714 Correct: 88.0 Tested: 112.0
+	 EE04 Acc.: 0.784 Correct: 98.0 Tested: 125.0
+	 EE05 Acc.: 0.688073394495 Correct: 75.0 Tested: 109.0
+	 EE02 Acc.: 0.89811010682 Correct: 1093.0 Tested: 1217.0
+	 EE03 Acc.: 0.875 Correct: 287.0 Tested: 328.0
+	 EE01 Acc.: 0.808955223881 Correct: 542.0 Tested: 670.0
+	 EB01 Acc.: 0.729865771812 Correct: 435.0 Tested: 596.0
+	 EB03 Acc.: 0.805120910384 Correct: 566.0 Tested: 703.0
+	 EB02 Acc.: 0.756238003839 Correct: 394.0 Tested: 521.0
+	 EB05 Acc.: 0.598290598291 Correct: 70.0 Tested: 117.0
+	 EB04 Acc.: 0.708737864078 Correct: 73.0 Tested: 103.0
+	 EB07 Acc.: 0.5 Correct: 70.0 Tested: 140.0
+	 EB06 Acc.: 0.574162679426 Correct: 120.0 Tested: 209.0
+	 EE11 Acc.: 0.654804270463 Correct: 184.0 Tested: 281.0
+	 EB08 Acc.: 0.454545454545 Correct: 15.0 Tested: 33.0
+	 EE13 Acc.: 0.635514018692 Correct: 68.0 Tested: 107.0
+	 EE12 Acc.: 0.747368421053 Correct: 71.0 Tested: 95.0
+	 EI99 Acc.: 0.576576576577 Correct: 64.0 Tested: 111.0
+	 EE14 Acc.: 0.444444444444 Correct: 20.0 Tested: 45.0
+	 EC08 Acc.: 0.538461538462 Correct: 21.0 Tested: 39.0
+	 EC09 Acc.: 0.82967032967 Correct: 151.0 Tested: 182.0
+	 EC01 Acc.: 0.747368421053 Correct: 213.0 Tested: 285.0
+	 EC02 Acc.: 0.712918660287 Correct: 298.0 Tested: 418.0
+	 EC03 Acc.: 0.661835748792 Correct: 137.0 Tested: 207.0
+	 EC04 Acc.: 0.77380952381 Correct: 130.0 Tested: 168.0
+	 EC05 Acc.: 0.668508287293 Correct: 121.0 Tested: 181.0
+	 EC06 Acc.: 0.459770114943 Correct: 40.0 Tested: 87.0
+	 EC07 Acc.: 0.732142857143 Correct: 82.0 Tested: 112.0
+	 EF05 Acc.: 0.77619047619 Correct: 163.0 Tested: 210.0
+	 EF04 Acc.: 0.757142857143 Correct: 106.0 Tested: 140.0
+	 EF06 Acc.: 0.895661157025 Correct: 867.0 Tested: 968.0
+	 EF01 Acc.: 0.801801801802 Correct: 89.0 Tested: 111.0
+	 EF03 Acc.: 0.758620689655 Correct: 66.0 Tested: 87.0
+	 EF02 Acc.: 0.761904761905 Correct: 96.0 Tested: 126.0
+	 EG08 Acc.: 0.529411764706 Correct: 27.0 Tested: 51.0
+	 EG09 Acc.: 0.854545454545 Correct: 47.0 Tested: 55.0
+	 EG04 Acc.: 0.691780821918 Correct: 101.0 Tested: 146.0
+	 EG05 Acc.: 0.741379310345 Correct: 43.0 Tested: 58.0
+	 EG06 Acc.: 0.873563218391 Correct: 76.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.851063829787 Correct: 40.0 Tested: 47.0
+	 EG02 Acc.: 0.757142857143 Correct: 53.0 Tested: 70.0
+	 EG03 Acc.: 0.508196721311 Correct: 31.0 Tested: 61.0
+	 ED07 Acc.: 0.593625498008 Correct: 149.0 Tested: 251.0
+	 ED06 Acc.: 0.606498194946 Correct: 168.0 Tested: 277.0
+	 ED05 Acc.: 0.509090909091 Correct: 196.0 Tested: 385.0
+	 ED04 Acc.: 0.85035971223 Correct: 591.0 Tested: 695.0
+	 ED03 Acc.: 0.719298245614 Correct: 246.0 Tested: 342.0
+	 ED02 Acc.: 0.718954248366 Correct: 110.0 Tested: 153.0
+	 ED01 Acc.: 0.762626262626 Correct: 302.0 Tested: 396.0
+	 ED09 Acc.: 0.852941176471 Correct: 174.0 Tested: 204.0
+	 ED08 Acc.: 0.68018018018 Correct: 151.0 Tested: 222.0
+	 EH10 Acc.: 0.652173913043 Correct: 60.0 Tested: 92.0
+	 EH11 Acc.: 0.31914893617 Correct: 30.0 Tested: 94.0
+	 EH12 Acc.: 0.381818181818 Correct: 21.0 Tested: 55.0
+	 EH13 Acc.: 0.4 Correct: 24.0 Tested: 60.0
+	 EH14 Acc.: 0.35 Correct: 14.0 Tested: 40.0
+	 EH15 Acc.: 0.285714285714 Correct: 4.0 Tested: 14.0
+	 EG99 Acc.: 0.864516129032 Correct: 134.0 Tested: 155.0
+	 EC99 Acc.: 0.625 Correct: 25.0 Tested: 40.0
+	 ED99 Acc.: 0.416326530612 Correct: 102.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.738095238095 Correct: 93.0 Tested: 126.0
+	 EH08 Acc.: 0.615384615385 Correct: 40.0 Tested: 65.0
+	 EH03 Acc.: 0.83 Correct: 83.0 Tested: 100.0
+	 EH02 Acc.: 0.84375 Correct: 270.0 Tested: 320.0
+	 EH01 Acc.: 0.770833333333 Correct: 148.0 Tested: 192.0
+	 EH07 Acc.: 0.780487804878 Correct: 160.0 Tested: 205.0
+	 EH06 Acc.: 0.745454545455 Correct: 82.0 Tested: 110.0
+	 EH05 Acc.: 0.642857142857 Correct: 18.0 Tested: 28.0
+	 EH04 Acc.: 0.666666666667 Correct: 44.0 Tested: 66.0
+	 EH99 Acc.: 0.634920634921 Correct: 40.0 Tested: 63.0
+	 EG10 Acc.: 0.739130434783 Correct: 51.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.730710205474
+Macro Acc.(class level) 0.67169010444 
+
+
+test time:  0.594s
+Top- 5
+	 EA99 Acc.: 0.369863013699 Correct: 54.0 Tested: 146.0
+	 EI02 Acc.: 0.660550458716 Correct: 72.0 Tested: 109.0
+	 EI03 Acc.: 0.856020942408 Correct: 327.0 Tested: 382.0
+	 EI01 Acc.: 0.659574468085 Correct: 62.0 Tested: 94.0
+	 EI06 Acc.: 0.737288135593 Correct: 87.0 Tested: 118.0
+	 EI07 Acc.: 0.478260869565 Correct: 11.0 Tested: 23.0
+	 EI04 Acc.: 0.841309823678 Correct: 334.0 Tested: 397.0
+	 EI05 Acc.: 0.69465648855 Correct: 91.0 Tested: 131.0
+	 ED10 Acc.: 0.784090909091 Correct: 276.0 Tested: 352.0
+	 EI08 Acc.: 0.52380952381 Correct: 22.0 Tested: 42.0
+	 EI09 Acc.: 0.856115107914 Correct: 119.0 Tested: 139.0
+	 ED11 Acc.: 0.610619469027 Correct: 69.0 Tested: 113.0
+	 EA08 Acc.: 0.623563218391 Correct: 217.0 Tested: 348.0
+	 EA09 Acc.: 0.861626248217 Correct: 604.0 Tested: 701.0
+	 EA02 Acc.: 0.634210526316 Correct: 241.0 Tested: 380.0
+	 EA03 Acc.: 0.68284789644 Correct: 211.0 Tested: 309.0
+	 EA01 Acc.: 0.632034632035 Correct: 146.0 Tested: 231.0
+	 EA06 Acc.: 0.780415430267 Correct: 263.0 Tested: 337.0
+	 EA07 Acc.: 0.703703703704 Correct: 323.0 Tested: 459.0
+	 EA04 Acc.: 0.675090252708 Correct: 187.0 Tested: 277.0
+	 EA05 Acc.: 0.786476868327 Correct: 442.0 Tested: 562.0
+	 EG07 Acc.: 0.896265560166 Correct: 216.0 Tested: 241.0
+	 EE99 Acc.: 0.712903225806 Correct: 221.0 Tested: 310.0
+	 EE10 Acc.: 0.695852534562 Correct: 151.0 Tested: 217.0
+	 EF99 Acc.: 0.656826568266 Correct: 178.0 Tested: 271.0
+	 EI11 Acc.: 0.80737704918 Correct: 197.0 Tested: 244.0
+	 EI10 Acc.: 0.685185185185 Correct: 37.0 Tested: 54.0
+	 EI12 Acc.: 0.720930232558 Correct: 155.0 Tested: 215.0
+	 EA15 Acc.: 0.5 Correct: 11.0 Tested: 22.0
+	 EA14 Acc.: 0.64 Correct: 64.0 Tested: 100.0
+	 EA11 Acc.: 0.721428571429 Correct: 101.0 Tested: 140.0
+	 EA10 Acc.: 0.872122762148 Correct: 341.0 Tested: 391.0
+	 EA13 Acc.: 0.880952380952 Correct: 74.0 Tested: 84.0
+	 EB99 Acc.: 0.437125748503 Correct: 73.0 Tested: 167.0
+	 EA12 Acc.: 0.775862068966 Correct: 45.0 Tested: 58.0
+	 EE08 Acc.: 0.628318584071 Correct: 71.0 Tested: 113.0
+	 EE09 Acc.: 0.775100401606 Correct: 193.0 Tested: 249.0
+	 EE06 Acc.: 0.795031055901 Correct: 256.0 Tested: 322.0
+	 EE07 Acc.: 0.785714285714 Correct: 88.0 Tested: 112.0
+	 EE04 Acc.: 0.816 Correct: 102.0 Tested: 125.0
+	 EE05 Acc.: 0.743119266055 Correct: 81.0 Tested: 109.0
+	 EE02 Acc.: 0.914543960559 Correct: 1113.0 Tested: 1217.0
+	 EE03 Acc.: 0.890243902439 Correct: 292.0 Tested: 328.0
+	 EE01 Acc.: 0.828358208955 Correct: 555.0 Tested: 670.0
+	 EB01 Acc.: 0.765100671141 Correct: 456.0 Tested: 596.0
+	 EB03 Acc.: 0.834992887624 Correct: 587.0 Tested: 703.0
+	 EB02 Acc.: 0.777351247601 Correct: 405.0 Tested: 521.0
+	 EB05 Acc.: 0.65811965812 Correct: 77.0 Tested: 117.0
+	 EB04 Acc.: 0.78640776699 Correct: 81.0 Tested: 103.0
+	 EB07 Acc.: 0.535714285714 Correct: 75.0 Tested: 140.0
+	 EB06 Acc.: 0.650717703349 Correct: 136.0 Tested: 209.0
+	 EE11 Acc.: 0.679715302491 Correct: 191.0 Tested: 281.0
+	 EB08 Acc.: 0.484848484848 Correct: 16.0 Tested: 33.0
+	 EE13 Acc.: 0.644859813084 Correct: 69.0 Tested: 107.0
+	 EE12 Acc.: 0.8 Correct: 76.0 Tested: 95.0
+	 EI99 Acc.: 0.648648648649 Correct: 72.0 Tested: 111.0
+	 EE14 Acc.: 0.488888888889 Correct: 22.0 Tested: 45.0
+	 EC08 Acc.: 0.589743589744 Correct: 23.0 Tested: 39.0
+	 EC09 Acc.: 0.846153846154 Correct: 154.0 Tested: 182.0
+	 EC01 Acc.: 0.775438596491 Correct: 221.0 Tested: 285.0
+	 EC02 Acc.: 0.748803827751 Correct: 313.0 Tested: 418.0
+	 EC03 Acc.: 0.685990338164 Correct: 142.0 Tested: 207.0
+	 EC04 Acc.: 0.797619047619 Correct: 134.0 Tested: 168.0
+	 EC05 Acc.: 0.718232044199 Correct: 130.0 Tested: 181.0
+	 EC06 Acc.: 0.494252873563 Correct: 43.0 Tested: 87.0
+	 EC07 Acc.: 0.776785714286 Correct: 87.0 Tested: 112.0
+	 EF05 Acc.: 0.8 Correct: 168.0 Tested: 210.0
+	 EF04 Acc.: 0.807142857143 Correct: 113.0 Tested: 140.0
+	 EF06 Acc.: 0.909090909091 Correct: 880.0 Tested: 968.0
+	 EF01 Acc.: 0.828828828829 Correct: 92.0 Tested: 111.0
+	 EF03 Acc.: 0.781609195402 Correct: 68.0 Tested: 87.0
+	 EF02 Acc.: 0.777777777778 Correct: 98.0 Tested: 126.0
+	 EG08 Acc.: 0.529411764706 Correct: 27.0 Tested: 51.0
+	 EG09 Acc.: 0.872727272727 Correct: 48.0 Tested: 55.0
+	 EG04 Acc.: 0.719178082192 Correct: 105.0 Tested: 146.0
+	 EG05 Acc.: 0.741379310345 Correct: 43.0 Tested: 58.0
+	 EG06 Acc.: 0.885057471264 Correct: 77.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.872340425532 Correct: 41.0 Tested: 47.0
+	 EG02 Acc.: 0.8 Correct: 56.0 Tested: 70.0
+	 EG03 Acc.: 0.573770491803 Correct: 35.0 Tested: 61.0
+	 ED07 Acc.: 0.617529880478 Correct: 155.0 Tested: 251.0
+	 ED06 Acc.: 0.657039711191 Correct: 182.0 Tested: 277.0
+	 ED05 Acc.: 0.542857142857 Correct: 209.0 Tested: 385.0
+	 ED04 Acc.: 0.884892086331 Correct: 615.0 Tested: 695.0
+	 ED03 Acc.: 0.769005847953 Correct: 263.0 Tested: 342.0
+	 ED02 Acc.: 0.751633986928 Correct: 115.0 Tested: 153.0
+	 ED01 Acc.: 0.780303030303 Correct: 309.0 Tested: 396.0
+	 ED09 Acc.: 0.872549019608 Correct: 178.0 Tested: 204.0
+	 ED08 Acc.: 0.720720720721 Correct: 160.0 Tested: 222.0
+	 EH10 Acc.: 0.695652173913 Correct: 64.0 Tested: 92.0
+	 EH11 Acc.: 0.382978723404 Correct: 36.0 Tested: 94.0
+	 EH12 Acc.: 0.454545454545 Correct: 25.0 Tested: 55.0
+	 EH13 Acc.: 0.433333333333 Correct: 26.0 Tested: 60.0
+	 EH14 Acc.: 0.375 Correct: 15.0 Tested: 40.0
+	 EH15 Acc.: 0.285714285714 Correct: 4.0 Tested: 14.0
+	 EG99 Acc.: 0.877419354839 Correct: 136.0 Tested: 155.0
+	 EC99 Acc.: 0.65 Correct: 26.0 Tested: 40.0
+	 ED99 Acc.: 0.469387755102 Correct: 115.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.761904761905 Correct: 96.0 Tested: 126.0
+	 EH08 Acc.: 0.630769230769 Correct: 41.0 Tested: 65.0
+	 EH03 Acc.: 0.83 Correct: 83.0 Tested: 100.0
+	 EH02 Acc.: 0.86875 Correct: 278.0 Tested: 320.0
+	 EH01 Acc.: 0.78125 Correct: 150.0 Tested: 192.0
+	 EH07 Acc.: 0.80487804878 Correct: 165.0 Tested: 205.0
+	 EH06 Acc.: 0.763636363636 Correct: 84.0 Tested: 110.0
+	 EH05 Acc.: 0.714285714286 Correct: 20.0 Tested: 28.0
+	 EH04 Acc.: 0.69696969697 Correct: 46.0 Tested: 66.0
+	 EH99 Acc.: 0.650793650794 Correct: 41.0 Tested: 63.0
+	 EG10 Acc.: 0.753623188406 Correct: 52.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.76020973655
+Macro Acc.(class level) 0.702319072861 
+
+
+test time:  0.727s
+Top- 6
+	 EA99 Acc.: 0.369863013699 Correct: 54.0 Tested: 146.0
+	 EI02 Acc.: 0.697247706422 Correct: 76.0 Tested: 109.0
+	 EI03 Acc.: 0.86387434555 Correct: 330.0 Tested: 382.0
+	 EI01 Acc.: 0.691489361702 Correct: 65.0 Tested: 94.0
+	 EI06 Acc.: 0.762711864407 Correct: 90.0 Tested: 118.0
+	 EI07 Acc.: 0.521739130435 Correct: 12.0 Tested: 23.0
+	 EI04 Acc.: 0.848866498741 Correct: 337.0 Tested: 397.0
+	 EI05 Acc.: 0.702290076336 Correct: 92.0 Tested: 131.0
+	 ED10 Acc.: 0.795454545455 Correct: 280.0 Tested: 352.0
+	 EI08 Acc.: 0.571428571429 Correct: 24.0 Tested: 42.0
+	 EI09 Acc.: 0.863309352518 Correct: 120.0 Tested: 139.0
+	 ED11 Acc.: 0.619469026549 Correct: 70.0 Tested: 113.0
+	 EA08 Acc.: 0.669540229885 Correct: 233.0 Tested: 348.0
+	 EA09 Acc.: 0.873038516405 Correct: 612.0 Tested: 701.0
+	 EA02 Acc.: 0.655263157895 Correct: 249.0 Tested: 380.0
+	 EA03 Acc.: 0.708737864078 Correct: 219.0 Tested: 309.0
+	 EA01 Acc.: 0.640692640693 Correct: 148.0 Tested: 231.0
+	 EA06 Acc.: 0.795252225519 Correct: 268.0 Tested: 337.0
+	 EA07 Acc.: 0.718954248366 Correct: 330.0 Tested: 459.0
+	 EA04 Acc.: 0.703971119134 Correct: 195.0 Tested: 277.0
+	 EA05 Acc.: 0.809608540925 Correct: 455.0 Tested: 562.0
+	 EG07 Acc.: 0.912863070539 Correct: 220.0 Tested: 241.0
+	 EE99 Acc.: 0.729032258065 Correct: 226.0 Tested: 310.0
+	 EE10 Acc.: 0.709677419355 Correct: 154.0 Tested: 217.0
+	 EF99 Acc.: 0.675276752768 Correct: 183.0 Tested: 271.0
+	 EI11 Acc.: 0.827868852459 Correct: 202.0 Tested: 244.0
+	 EI10 Acc.: 0.722222222222 Correct: 39.0 Tested: 54.0
+	 EI12 Acc.: 0.753488372093 Correct: 162.0 Tested: 215.0
+	 EA15 Acc.: 0.5 Correct: 11.0 Tested: 22.0
+	 EA14 Acc.: 0.65 Correct: 65.0 Tested: 100.0
+	 EA11 Acc.: 0.742857142857 Correct: 104.0 Tested: 140.0
+	 EA10 Acc.: 0.877237851662 Correct: 343.0 Tested: 391.0
+	 EA13 Acc.: 0.880952380952 Correct: 74.0 Tested: 84.0
+	 EB99 Acc.: 0.479041916168 Correct: 80.0 Tested: 167.0
+	 EA12 Acc.: 0.793103448276 Correct: 46.0 Tested: 58.0
+	 EE08 Acc.: 0.654867256637 Correct: 74.0 Tested: 113.0
+	 EE09 Acc.: 0.791164658635 Correct: 197.0 Tested: 249.0
+	 EE06 Acc.: 0.807453416149 Correct: 260.0 Tested: 322.0
+	 EE07 Acc.: 0.8125 Correct: 91.0 Tested: 112.0
+	 EE04 Acc.: 0.864 Correct: 108.0 Tested: 125.0
+	 EE05 Acc.: 0.761467889908 Correct: 83.0 Tested: 109.0
+	 EE02 Acc.: 0.923582580115 Correct: 1124.0 Tested: 1217.0
+	 EE03 Acc.: 0.896341463415 Correct: 294.0 Tested: 328.0
+	 EE01 Acc.: 0.844776119403 Correct: 566.0 Tested: 670.0
+	 EB01 Acc.: 0.78355704698 Correct: 467.0 Tested: 596.0
+	 EB03 Acc.: 0.859174964438 Correct: 604.0 Tested: 703.0
+	 EB02 Acc.: 0.792706333973 Correct: 413.0 Tested: 521.0
+	 EB05 Acc.: 0.700854700855 Correct: 82.0 Tested: 117.0
+	 EB04 Acc.: 0.815533980583 Correct: 84.0 Tested: 103.0
+	 EB07 Acc.: 0.557142857143 Correct: 78.0 Tested: 140.0
+	 EB06 Acc.: 0.693779904306 Correct: 145.0 Tested: 209.0
+	 EE11 Acc.: 0.708185053381 Correct: 199.0 Tested: 281.0
+	 EB08 Acc.: 0.515151515152 Correct: 17.0 Tested: 33.0
+	 EE13 Acc.: 0.663551401869 Correct: 71.0 Tested: 107.0
+	 EE12 Acc.: 0.8 Correct: 76.0 Tested: 95.0
+	 EI99 Acc.: 0.684684684685 Correct: 76.0 Tested: 111.0
+	 EE14 Acc.: 0.511111111111 Correct: 23.0 Tested: 45.0
+	 EC08 Acc.: 0.615384615385 Correct: 24.0 Tested: 39.0
+	 EC09 Acc.: 0.851648351648 Correct: 155.0 Tested: 182.0
+	 EC01 Acc.: 0.80701754386 Correct: 230.0 Tested: 285.0
+	 EC02 Acc.: 0.772727272727 Correct: 323.0 Tested: 418.0
+	 EC03 Acc.: 0.700483091787 Correct: 145.0 Tested: 207.0
+	 EC04 Acc.: 0.827380952381 Correct: 139.0 Tested: 168.0
+	 EC05 Acc.: 0.75138121547 Correct: 136.0 Tested: 181.0
+	 EC06 Acc.: 0.51724137931 Correct: 45.0 Tested: 87.0
+	 EC07 Acc.: 0.785714285714 Correct: 88.0 Tested: 112.0
+	 EF05 Acc.: 0.819047619048 Correct: 172.0 Tested: 210.0
+	 EF04 Acc.: 0.835714285714 Correct: 117.0 Tested: 140.0
+	 EF06 Acc.: 0.920454545455 Correct: 891.0 Tested: 968.0
+	 EF01 Acc.: 0.837837837838 Correct: 93.0 Tested: 111.0
+	 EF03 Acc.: 0.781609195402 Correct: 68.0 Tested: 87.0
+	 EF02 Acc.: 0.777777777778 Correct: 98.0 Tested: 126.0
+	 EG08 Acc.: 0.529411764706 Correct: 27.0 Tested: 51.0
+	 EG09 Acc.: 0.872727272727 Correct: 48.0 Tested: 55.0
+	 EG04 Acc.: 0.739726027397 Correct: 108.0 Tested: 146.0
+	 EG05 Acc.: 0.793103448276 Correct: 46.0 Tested: 58.0
+	 EG06 Acc.: 0.919540229885 Correct: 80.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.893617021277 Correct: 42.0 Tested: 47.0
+	 EG02 Acc.: 0.828571428571 Correct: 58.0 Tested: 70.0
+	 EG03 Acc.: 0.573770491803 Correct: 35.0 Tested: 61.0
+	 ED07 Acc.: 0.653386454183 Correct: 164.0 Tested: 251.0
+	 ED06 Acc.: 0.693140794224 Correct: 192.0 Tested: 277.0
+	 ED05 Acc.: 0.563636363636 Correct: 217.0 Tested: 385.0
+	 ED04 Acc.: 0.894964028777 Correct: 622.0 Tested: 695.0
+	 ED03 Acc.: 0.783625730994 Correct: 268.0 Tested: 342.0
+	 ED02 Acc.: 0.777777777778 Correct: 119.0 Tested: 153.0
+	 ED01 Acc.: 0.808080808081 Correct: 320.0 Tested: 396.0
+	 ED09 Acc.: 0.882352941176 Correct: 180.0 Tested: 204.0
+	 ED08 Acc.: 0.743243243243 Correct: 165.0 Tested: 222.0
+	 EH10 Acc.: 0.717391304348 Correct: 66.0 Tested: 92.0
+	 EH11 Acc.: 0.436170212766 Correct: 41.0 Tested: 94.0
+	 EH12 Acc.: 0.472727272727 Correct: 26.0 Tested: 55.0
+	 EH13 Acc.: 0.45 Correct: 27.0 Tested: 60.0
+	 EH14 Acc.: 0.4 Correct: 16.0 Tested: 40.0
+	 EH15 Acc.: 0.357142857143 Correct: 5.0 Tested: 14.0
+	 EG99 Acc.: 0.883870967742 Correct: 137.0 Tested: 155.0
+	 EC99 Acc.: 0.65 Correct: 26.0 Tested: 40.0
+	 ED99 Acc.: 0.489795918367 Correct: 120.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.785714285714 Correct: 99.0 Tested: 126.0
+	 EH08 Acc.: 0.646153846154 Correct: 42.0 Tested: 65.0
+	 EH03 Acc.: 0.83 Correct: 83.0 Tested: 100.0
+	 EH02 Acc.: 0.878125 Correct: 281.0 Tested: 320.0
+	 EH01 Acc.: 0.791666666667 Correct: 152.0 Tested: 192.0
+	 EH07 Acc.: 0.843902439024 Correct: 173.0 Tested: 205.0
+	 EH06 Acc.: 0.781818181818 Correct: 86.0 Tested: 110.0
+	 EH05 Acc.: 0.714285714286 Correct: 20.0 Tested: 28.0
+	 EH04 Acc.: 0.712121212121 Correct: 47.0 Tested: 66.0
+	 EH99 Acc.: 0.698412698413 Correct: 44.0 Tested: 63.0
+	 EG10 Acc.: 0.797101449275 Correct: 55.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.778881405064
+Macro Acc.(class level) 0.722778479703 
+
+
+test time:  0.871s
+Top- 7
+	 EA99 Acc.: 0.376712328767 Correct: 55.0 Tested: 146.0
+	 EI02 Acc.: 0.706422018349 Correct: 77.0 Tested: 109.0
+	 EI03 Acc.: 0.876963350785 Correct: 335.0 Tested: 382.0
+	 EI01 Acc.: 0.702127659574 Correct: 66.0 Tested: 94.0
+	 EI06 Acc.: 0.771186440678 Correct: 91.0 Tested: 118.0
+	 EI07 Acc.: 0.521739130435 Correct: 12.0 Tested: 23.0
+	 EI04 Acc.: 0.851385390428 Correct: 338.0 Tested: 397.0
+	 EI05 Acc.: 0.702290076336 Correct: 92.0 Tested: 131.0
+	 ED10 Acc.: 0.803977272727 Correct: 283.0 Tested: 352.0
+	 EI08 Acc.: 0.619047619048 Correct: 26.0 Tested: 42.0
+	 EI09 Acc.: 0.884892086331 Correct: 123.0 Tested: 139.0
+	 ED11 Acc.: 0.672566371681 Correct: 76.0 Tested: 113.0
+	 EA08 Acc.: 0.695402298851 Correct: 242.0 Tested: 348.0
+	 EA09 Acc.: 0.877318116976 Correct: 615.0 Tested: 701.0
+	 EA02 Acc.: 0.678947368421 Correct: 258.0 Tested: 380.0
+	 EA03 Acc.: 0.754045307443 Correct: 233.0 Tested: 309.0
+	 EA01 Acc.: 0.670995670996 Correct: 155.0 Tested: 231.0
+	 EA06 Acc.: 0.804154302671 Correct: 271.0 Tested: 337.0
+	 EA07 Acc.: 0.729847494553 Correct: 335.0 Tested: 459.0
+	 EA04 Acc.: 0.73285198556 Correct: 203.0 Tested: 277.0
+	 EA05 Acc.: 0.825622775801 Correct: 464.0 Tested: 562.0
+	 EG07 Acc.: 0.917012448133 Correct: 221.0 Tested: 241.0
+	 EE99 Acc.: 0.767741935484 Correct: 238.0 Tested: 310.0
+	 EE10 Acc.: 0.746543778802 Correct: 162.0 Tested: 217.0
+	 EF99 Acc.: 0.693726937269 Correct: 188.0 Tested: 271.0
+	 EI11 Acc.: 0.840163934426 Correct: 205.0 Tested: 244.0
+	 EI10 Acc.: 0.722222222222 Correct: 39.0 Tested: 54.0
+	 EI12 Acc.: 0.795348837209 Correct: 171.0 Tested: 215.0
+	 EA15 Acc.: 0.5 Correct: 11.0 Tested: 22.0
+	 EA14 Acc.: 0.66 Correct: 66.0 Tested: 100.0
+	 EA11 Acc.: 0.771428571429 Correct: 108.0 Tested: 140.0
+	 EA10 Acc.: 0.887468030691 Correct: 347.0 Tested: 391.0
+	 EA13 Acc.: 0.880952380952 Correct: 74.0 Tested: 84.0
+	 EB99 Acc.: 0.497005988024 Correct: 83.0 Tested: 167.0
+	 EA12 Acc.: 0.810344827586 Correct: 47.0 Tested: 58.0
+	 EE08 Acc.: 0.681415929204 Correct: 77.0 Tested: 113.0
+	 EE09 Acc.: 0.81124497992 Correct: 202.0 Tested: 249.0
+	 EE06 Acc.: 0.819875776398 Correct: 264.0 Tested: 322.0
+	 EE07 Acc.: 0.821428571429 Correct: 92.0 Tested: 112.0
+	 EE04 Acc.: 0.872 Correct: 109.0 Tested: 125.0
+	 EE05 Acc.: 0.761467889908 Correct: 83.0 Tested: 109.0
+	 EE02 Acc.: 0.930156121611 Correct: 1132.0 Tested: 1217.0
+	 EE03 Acc.: 0.905487804878 Correct: 297.0 Tested: 328.0
+	 EE01 Acc.: 0.850746268657 Correct: 570.0 Tested: 670.0
+	 EB01 Acc.: 0.795302013423 Correct: 474.0 Tested: 596.0
+	 EB03 Acc.: 0.870554765292 Correct: 612.0 Tested: 703.0
+	 EB02 Acc.: 0.808061420345 Correct: 421.0 Tested: 521.0
+	 EB05 Acc.: 0.700854700855 Correct: 82.0 Tested: 117.0
+	 EB04 Acc.: 0.825242718447 Correct: 85.0 Tested: 103.0
+	 EB07 Acc.: 0.585714285714 Correct: 82.0 Tested: 140.0
+	 EB06 Acc.: 0.708133971292 Correct: 148.0 Tested: 209.0
+	 EE11 Acc.: 0.725978647687 Correct: 204.0 Tested: 281.0
+	 EB08 Acc.: 0.515151515152 Correct: 17.0 Tested: 33.0
+	 EE13 Acc.: 0.682242990654 Correct: 73.0 Tested: 107.0
+	 EE12 Acc.: 0.810526315789 Correct: 77.0 Tested: 95.0
+	 EI99 Acc.: 0.711711711712 Correct: 79.0 Tested: 111.0
+	 EE14 Acc.: 0.511111111111 Correct: 23.0 Tested: 45.0
+	 EC08 Acc.: 0.666666666667 Correct: 26.0 Tested: 39.0
+	 EC09 Acc.: 0.868131868132 Correct: 158.0 Tested: 182.0
+	 EC01 Acc.: 0.817543859649 Correct: 233.0 Tested: 285.0
+	 EC02 Acc.: 0.794258373206 Correct: 332.0 Tested: 418.0
+	 EC03 Acc.: 0.739130434783 Correct: 153.0 Tested: 207.0
+	 EC04 Acc.: 0.85119047619 Correct: 143.0 Tested: 168.0
+	 EC05 Acc.: 0.78453038674 Correct: 142.0 Tested: 181.0
+	 EC06 Acc.: 0.51724137931 Correct: 45.0 Tested: 87.0
+	 EC07 Acc.: 0.830357142857 Correct: 93.0 Tested: 112.0
+	 EF05 Acc.: 0.828571428571 Correct: 174.0 Tested: 210.0
+	 EF04 Acc.: 0.835714285714 Correct: 117.0 Tested: 140.0
+	 EF06 Acc.: 0.935950413223 Correct: 906.0 Tested: 968.0
+	 EF01 Acc.: 0.846846846847 Correct: 94.0 Tested: 111.0
+	 EF03 Acc.: 0.781609195402 Correct: 68.0 Tested: 87.0
+	 EF02 Acc.: 0.777777777778 Correct: 98.0 Tested: 126.0
+	 EG08 Acc.: 0.607843137255 Correct: 31.0 Tested: 51.0
+	 EG09 Acc.: 0.890909090909 Correct: 49.0 Tested: 55.0
+	 EG04 Acc.: 0.739726027397 Correct: 108.0 Tested: 146.0
+	 EG05 Acc.: 0.827586206897 Correct: 48.0 Tested: 58.0
+	 EG06 Acc.: 0.919540229885 Correct: 80.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.893617021277 Correct: 42.0 Tested: 47.0
+	 EG02 Acc.: 0.857142857143 Correct: 60.0 Tested: 70.0
+	 EG03 Acc.: 0.606557377049 Correct: 37.0 Tested: 61.0
+	 ED07 Acc.: 0.681274900398 Correct: 171.0 Tested: 251.0
+	 ED06 Acc.: 0.71119133574 Correct: 197.0 Tested: 277.0
+	 ED05 Acc.: 0.633766233766 Correct: 244.0 Tested: 385.0
+	 ED04 Acc.: 0.906474820144 Correct: 630.0 Tested: 695.0
+	 ED03 Acc.: 0.809941520468 Correct: 277.0 Tested: 342.0
+	 ED02 Acc.: 0.803921568627 Correct: 123.0 Tested: 153.0
+	 ED01 Acc.: 0.820707070707 Correct: 325.0 Tested: 396.0
+	 ED09 Acc.: 0.897058823529 Correct: 183.0 Tested: 204.0
+	 ED08 Acc.: 0.752252252252 Correct: 167.0 Tested: 222.0
+	 EH10 Acc.: 0.717391304348 Correct: 66.0 Tested: 92.0
+	 EH11 Acc.: 0.521276595745 Correct: 49.0 Tested: 94.0
+	 EH12 Acc.: 0.527272727273 Correct: 29.0 Tested: 55.0
+	 EH13 Acc.: 0.466666666667 Correct: 28.0 Tested: 60.0
+	 EH14 Acc.: 0.4 Correct: 16.0 Tested: 40.0
+	 EH15 Acc.: 0.357142857143 Correct: 5.0 Tested: 14.0
+	 EG99 Acc.: 0.890322580645 Correct: 138.0 Tested: 155.0
+	 EC99 Acc.: 0.65 Correct: 26.0 Tested: 40.0
+	 ED99 Acc.: 0.502040816327 Correct: 123.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.801587301587 Correct: 101.0 Tested: 126.0
+	 EH08 Acc.: 0.676923076923 Correct: 44.0 Tested: 65.0
+	 EH03 Acc.: 0.84 Correct: 84.0 Tested: 100.0
+	 EH02 Acc.: 0.8875 Correct: 284.0 Tested: 320.0
+	 EH01 Acc.: 0.817708333333 Correct: 157.0 Tested: 192.0
+	 EH07 Acc.: 0.848780487805 Correct: 174.0 Tested: 205.0
+	 EH06 Acc.: 0.790909090909 Correct: 87.0 Tested: 110.0
+	 EH05 Acc.: 0.714285714286 Correct: 20.0 Tested: 28.0
+	 EH04 Acc.: 0.727272727273 Correct: 48.0 Tested: 66.0
+	 EH99 Acc.: 0.698412698413 Correct: 44.0 Tested: 63.0
+	 EG10 Acc.: 0.797101449275 Correct: 55.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.795251087049
+Macro Acc.(class level) 0.739481033031 
+
+
+test time:  1.023s
+Top- 8
+	 EA99 Acc.: 0.376712328767 Correct: 55.0 Tested: 146.0
+	 EI02 Acc.: 0.724770642202 Correct: 79.0 Tested: 109.0
+	 EI03 Acc.: 0.88219895288 Correct: 337.0 Tested: 382.0
+	 EI01 Acc.: 0.712765957447 Correct: 67.0 Tested: 94.0
+	 EI06 Acc.: 0.779661016949 Correct: 92.0 Tested: 118.0
+	 EI07 Acc.: 0.521739130435 Correct: 12.0 Tested: 23.0
+	 EI04 Acc.: 0.856423173804 Correct: 340.0 Tested: 397.0
+	 EI05 Acc.: 0.702290076336 Correct: 92.0 Tested: 131.0
+	 ED10 Acc.: 0.826704545455 Correct: 291.0 Tested: 352.0
+	 EI08 Acc.: 0.619047619048 Correct: 26.0 Tested: 42.0
+	 EI09 Acc.: 0.892086330935 Correct: 124.0 Tested: 139.0
+	 ED11 Acc.: 0.70796460177 Correct: 80.0 Tested: 113.0
+	 EA08 Acc.: 0.715517241379 Correct: 249.0 Tested: 348.0
+	 EA09 Acc.: 0.890156918688 Correct: 624.0 Tested: 701.0
+	 EA02 Acc.: 0.689473684211 Correct: 262.0 Tested: 380.0
+	 EA03 Acc.: 0.773462783172 Correct: 239.0 Tested: 309.0
+	 EA01 Acc.: 0.692640692641 Correct: 160.0 Tested: 231.0
+	 EA06 Acc.: 0.821958456973 Correct: 277.0 Tested: 337.0
+	 EA07 Acc.: 0.742919389978 Correct: 341.0 Tested: 459.0
+	 EA04 Acc.: 0.761732851986 Correct: 211.0 Tested: 277.0
+	 EA05 Acc.: 0.841637010676 Correct: 473.0 Tested: 562.0
+	 EG07 Acc.: 0.917012448133 Correct: 221.0 Tested: 241.0
+	 EE99 Acc.: 0.78064516129 Correct: 242.0 Tested: 310.0
+	 EE10 Acc.: 0.774193548387 Correct: 168.0 Tested: 217.0
+	 EF99 Acc.: 0.719557195572 Correct: 195.0 Tested: 271.0
+	 EI11 Acc.: 0.840163934426 Correct: 205.0 Tested: 244.0
+	 EI10 Acc.: 0.722222222222 Correct: 39.0 Tested: 54.0
+	 EI12 Acc.: 0.813953488372 Correct: 175.0 Tested: 215.0
+	 EA15 Acc.: 0.5 Correct: 11.0 Tested: 22.0
+	 EA14 Acc.: 0.67 Correct: 67.0 Tested: 100.0
+	 EA11 Acc.: 0.778571428571 Correct: 109.0 Tested: 140.0
+	 EA10 Acc.: 0.895140664962 Correct: 350.0 Tested: 391.0
+	 EA13 Acc.: 0.892857142857 Correct: 75.0 Tested: 84.0
+	 EB99 Acc.: 0.532934131737 Correct: 89.0 Tested: 167.0
+	 EA12 Acc.: 0.810344827586 Correct: 47.0 Tested: 58.0
+	 EE08 Acc.: 0.716814159292 Correct: 81.0 Tested: 113.0
+	 EE09 Acc.: 0.819277108434 Correct: 204.0 Tested: 249.0
+	 EE06 Acc.: 0.82298136646 Correct: 265.0 Tested: 322.0
+	 EE07 Acc.: 0.857142857143 Correct: 96.0 Tested: 112.0
+	 EE04 Acc.: 0.888 Correct: 111.0 Tested: 125.0
+	 EE05 Acc.: 0.770642201835 Correct: 84.0 Tested: 109.0
+	 EE02 Acc.: 0.934264585045 Correct: 1137.0 Tested: 1217.0
+	 EE03 Acc.: 0.911585365854 Correct: 299.0 Tested: 328.0
+	 EE01 Acc.: 0.865671641791 Correct: 580.0 Tested: 670.0
+	 EB01 Acc.: 0.805369127517 Correct: 480.0 Tested: 596.0
+	 EB03 Acc.: 0.883357041252 Correct: 621.0 Tested: 703.0
+	 EB02 Acc.: 0.815738963532 Correct: 425.0 Tested: 521.0
+	 EB05 Acc.: 0.700854700855 Correct: 82.0 Tested: 117.0
+	 EB04 Acc.: 0.834951456311 Correct: 86.0 Tested: 103.0
+	 EB07 Acc.: 0.628571428571 Correct: 88.0 Tested: 140.0
+	 EB06 Acc.: 0.727272727273 Correct: 152.0 Tested: 209.0
+	 EE11 Acc.: 0.758007117438 Correct: 213.0 Tested: 281.0
+	 EB08 Acc.: 0.515151515152 Correct: 17.0 Tested: 33.0
+	 EE13 Acc.: 0.691588785047 Correct: 74.0 Tested: 107.0
+	 EE12 Acc.: 0.810526315789 Correct: 77.0 Tested: 95.0
+	 EI99 Acc.: 0.720720720721 Correct: 80.0 Tested: 111.0
+	 EE14 Acc.: 0.511111111111 Correct: 23.0 Tested: 45.0
+	 EC08 Acc.: 0.692307692308 Correct: 27.0 Tested: 39.0
+	 EC09 Acc.: 0.884615384615 Correct: 161.0 Tested: 182.0
+	 EC01 Acc.: 0.821052631579 Correct: 234.0 Tested: 285.0
+	 EC02 Acc.: 0.820574162679 Correct: 343.0 Tested: 418.0
+	 EC03 Acc.: 0.763285024155 Correct: 158.0 Tested: 207.0
+	 EC04 Acc.: 0.875 Correct: 147.0 Tested: 168.0
+	 EC05 Acc.: 0.78453038674 Correct: 142.0 Tested: 181.0
+	 EC06 Acc.: 0.540229885057 Correct: 47.0 Tested: 87.0
+	 EC07 Acc.: 0.830357142857 Correct: 93.0 Tested: 112.0
+	 EF05 Acc.: 0.828571428571 Correct: 174.0 Tested: 210.0
+	 EF04 Acc.: 0.835714285714 Correct: 117.0 Tested: 140.0
+	 EF06 Acc.: 0.940082644628 Correct: 910.0 Tested: 968.0
+	 EF01 Acc.: 0.846846846847 Correct: 94.0 Tested: 111.0
+	 EF03 Acc.: 0.781609195402 Correct: 68.0 Tested: 87.0
+	 EF02 Acc.: 0.785714285714 Correct: 99.0 Tested: 126.0
+	 EG08 Acc.: 0.647058823529 Correct: 33.0 Tested: 51.0
+	 EG09 Acc.: 0.890909090909 Correct: 49.0 Tested: 55.0
+	 EG04 Acc.: 0.746575342466 Correct: 109.0 Tested: 146.0
+	 EG05 Acc.: 0.827586206897 Correct: 48.0 Tested: 58.0
+	 EG06 Acc.: 0.919540229885 Correct: 80.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.893617021277 Correct: 42.0 Tested: 47.0
+	 EG02 Acc.: 0.857142857143 Correct: 60.0 Tested: 70.0
+	 EG03 Acc.: 0.606557377049 Correct: 37.0 Tested: 61.0
+	 ED07 Acc.: 0.693227091633 Correct: 174.0 Tested: 251.0
+	 ED06 Acc.: 0.72202166065 Correct: 200.0 Tested: 277.0
+	 ED05 Acc.: 0.654545454545 Correct: 252.0 Tested: 385.0
+	 ED04 Acc.: 0.917985611511 Correct: 638.0 Tested: 695.0
+	 ED03 Acc.: 0.824561403509 Correct: 282.0 Tested: 342.0
+	 ED02 Acc.: 0.816993464052 Correct: 125.0 Tested: 153.0
+	 ED01 Acc.: 0.830808080808 Correct: 329.0 Tested: 396.0
+	 ED09 Acc.: 0.897058823529 Correct: 183.0 Tested: 204.0
+	 ED08 Acc.: 0.761261261261 Correct: 169.0 Tested: 222.0
+	 EH10 Acc.: 0.728260869565 Correct: 67.0 Tested: 92.0
+	 EH11 Acc.: 0.553191489362 Correct: 52.0 Tested: 94.0
+	 EH12 Acc.: 0.563636363636 Correct: 31.0 Tested: 55.0
+	 EH13 Acc.: 0.483333333333 Correct: 29.0 Tested: 60.0
+	 EH14 Acc.: 0.4 Correct: 16.0 Tested: 40.0
+	 EH15 Acc.: 0.357142857143 Correct: 5.0 Tested: 14.0
+	 EG99 Acc.: 0.903225806452 Correct: 140.0 Tested: 155.0
+	 EC99 Acc.: 0.65 Correct: 26.0 Tested: 40.0
+	 ED99 Acc.: 0.534693877551 Correct: 131.0 Tested: 245.0
+	 EC11 Acc.: 0.428571428571 Correct: 3.0 Tested: 7.0
+	 EH09 Acc.: 0.801587301587 Correct: 101.0 Tested: 126.0
+	 EH08 Acc.: 0.692307692308 Correct: 45.0 Tested: 65.0
+	 EH03 Acc.: 0.84 Correct: 84.0 Tested: 100.0
+	 EH02 Acc.: 0.90625 Correct: 290.0 Tested: 320.0
+	 EH01 Acc.: 0.828125 Correct: 159.0 Tested: 192.0
+	 EH07 Acc.: 0.853658536585 Correct: 175.0 Tested: 205.0
+	 EH06 Acc.: 0.790909090909 Correct: 87.0 Tested: 110.0
+	 EH05 Acc.: 0.714285714286 Correct: 20.0 Tested: 28.0
+	 EH04 Acc.: 0.727272727273 Correct: 48.0 Tested: 66.0
+	 EH99 Acc.: 0.698412698413 Correct: 44.0 Tested: 63.0
+	 EG10 Acc.: 0.797101449275 Correct: 55.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.807315201637
+Macro Acc.(class level) 0.750381083454 
+
+
+test time:  1.187s
+Top- 9
+	 EA99 Acc.: 0.397260273973 Correct: 58.0 Tested: 146.0
+	 EI02 Acc.: 0.752293577982 Correct: 82.0 Tested: 109.0
+	 EI03 Acc.: 0.895287958115 Correct: 342.0 Tested: 382.0
+	 EI01 Acc.: 0.712765957447 Correct: 67.0 Tested: 94.0
+	 EI06 Acc.: 0.796610169492 Correct: 94.0 Tested: 118.0
+	 EI07 Acc.: 0.521739130435 Correct: 12.0 Tested: 23.0
+	 EI04 Acc.: 0.858942065491 Correct: 341.0 Tested: 397.0
+	 EI05 Acc.: 0.725190839695 Correct: 95.0 Tested: 131.0
+	 ED10 Acc.: 0.832386363636 Correct: 293.0 Tested: 352.0
+	 EI08 Acc.: 0.642857142857 Correct: 27.0 Tested: 42.0
+	 EI09 Acc.: 0.892086330935 Correct: 124.0 Tested: 139.0
+	 ED11 Acc.: 0.70796460177 Correct: 80.0 Tested: 113.0
+	 EA08 Acc.: 0.721264367816 Correct: 251.0 Tested: 348.0
+	 EA09 Acc.: 0.898716119829 Correct: 630.0 Tested: 701.0
+	 EA02 Acc.: 0.707894736842 Correct: 269.0 Tested: 380.0
+	 EA03 Acc.: 0.783171521036 Correct: 242.0 Tested: 309.0
+	 EA01 Acc.: 0.705627705628 Correct: 163.0 Tested: 231.0
+	 EA06 Acc.: 0.833827893175 Correct: 281.0 Tested: 337.0
+	 EA07 Acc.: 0.758169934641 Correct: 348.0 Tested: 459.0
+	 EA04 Acc.: 0.772563176895 Correct: 214.0 Tested: 277.0
+	 EA05 Acc.: 0.848754448399 Correct: 477.0 Tested: 562.0
+	 EG07 Acc.: 0.917012448133 Correct: 221.0 Tested: 241.0
+	 EE99 Acc.: 0.793548387097 Correct: 246.0 Tested: 310.0
+	 EE10 Acc.: 0.797235023041 Correct: 173.0 Tested: 217.0
+	 EF99 Acc.: 0.738007380074 Correct: 200.0 Tested: 271.0
+	 EI11 Acc.: 0.844262295082 Correct: 206.0 Tested: 244.0
+	 EI10 Acc.: 0.759259259259 Correct: 41.0 Tested: 54.0
+	 EI12 Acc.: 0.846511627907 Correct: 182.0 Tested: 215.0
+	 EA15 Acc.: 0.545454545455 Correct: 12.0 Tested: 22.0
+	 EA14 Acc.: 0.68 Correct: 68.0 Tested: 100.0
+	 EA11 Acc.: 0.778571428571 Correct: 109.0 Tested: 140.0
+	 EA10 Acc.: 0.895140664962 Correct: 350.0 Tested: 391.0
+	 EA13 Acc.: 0.892857142857 Correct: 75.0 Tested: 84.0
+	 EB99 Acc.: 0.568862275449 Correct: 95.0 Tested: 167.0
+	 EA12 Acc.: 0.810344827586 Correct: 47.0 Tested: 58.0
+	 EE08 Acc.: 0.734513274336 Correct: 83.0 Tested: 113.0
+	 EE09 Acc.: 0.823293172691 Correct: 205.0 Tested: 249.0
+	 EE06 Acc.: 0.82298136646 Correct: 265.0 Tested: 322.0
+	 EE07 Acc.: 0.857142857143 Correct: 96.0 Tested: 112.0
+	 EE04 Acc.: 0.904 Correct: 113.0 Tested: 125.0
+	 EE05 Acc.: 0.788990825688 Correct: 86.0 Tested: 109.0
+	 EE02 Acc.: 0.936729663106 Correct: 1140.0 Tested: 1217.0
+	 EE03 Acc.: 0.920731707317 Correct: 302.0 Tested: 328.0
+	 EE01 Acc.: 0.873134328358 Correct: 585.0 Tested: 670.0
+	 EB01 Acc.: 0.818791946309 Correct: 488.0 Tested: 596.0
+	 EB03 Acc.: 0.889046941679 Correct: 625.0 Tested: 703.0
+	 EB02 Acc.: 0.823416506718 Correct: 429.0 Tested: 521.0
+	 EB05 Acc.: 0.717948717949 Correct: 84.0 Tested: 117.0
+	 EB04 Acc.: 0.854368932039 Correct: 88.0 Tested: 103.0
+	 EB07 Acc.: 0.65 Correct: 91.0 Tested: 140.0
+	 EB06 Acc.: 0.746411483254 Correct: 156.0 Tested: 209.0
+	 EE11 Acc.: 0.76512455516 Correct: 215.0 Tested: 281.0
+	 EB08 Acc.: 0.515151515152 Correct: 17.0 Tested: 33.0
+	 EE13 Acc.: 0.700934579439 Correct: 75.0 Tested: 107.0
+	 EE12 Acc.: 0.810526315789 Correct: 77.0 Tested: 95.0
+	 EI99 Acc.: 0.72972972973 Correct: 81.0 Tested: 111.0
+	 EE14 Acc.: 0.533333333333 Correct: 24.0 Tested: 45.0
+	 EC08 Acc.: 0.692307692308 Correct: 27.0 Tested: 39.0
+	 EC09 Acc.: 0.89010989011 Correct: 162.0 Tested: 182.0
+	 EC01 Acc.: 0.831578947368 Correct: 237.0 Tested: 285.0
+	 EC02 Acc.: 0.834928229665 Correct: 349.0 Tested: 418.0
+	 EC03 Acc.: 0.787439613527 Correct: 163.0 Tested: 207.0
+	 EC04 Acc.: 0.886904761905 Correct: 149.0 Tested: 168.0
+	 EC05 Acc.: 0.82320441989 Correct: 149.0 Tested: 181.0
+	 EC06 Acc.: 0.563218390805 Correct: 49.0 Tested: 87.0
+	 EC07 Acc.: 0.848214285714 Correct: 95.0 Tested: 112.0
+	 EF05 Acc.: 0.833333333333 Correct: 175.0 Tested: 210.0
+	 EF04 Acc.: 0.857142857143 Correct: 120.0 Tested: 140.0
+	 EF06 Acc.: 0.944214876033 Correct: 914.0 Tested: 968.0
+	 EF01 Acc.: 0.846846846847 Correct: 94.0 Tested: 111.0
+	 EF03 Acc.: 0.816091954023 Correct: 71.0 Tested: 87.0
+	 EF02 Acc.: 0.801587301587 Correct: 101.0 Tested: 126.0
+	 EG08 Acc.: 0.666666666667 Correct: 34.0 Tested: 51.0
+	 EG09 Acc.: 0.890909090909 Correct: 49.0 Tested: 55.0
+	 EG04 Acc.: 0.767123287671 Correct: 112.0 Tested: 146.0
+	 EG05 Acc.: 0.827586206897 Correct: 48.0 Tested: 58.0
+	 EG06 Acc.: 0.931034482759 Correct: 81.0 Tested: 87.0
+	 EC10 Acc.: 0.333333333333 Correct: 7.0 Tested: 21.0
+	 EG01 Acc.: 0.893617021277 Correct: 42.0 Tested: 47.0
+	 EG02 Acc.: 0.857142857143 Correct: 60.0 Tested: 70.0
+	 EG03 Acc.: 0.622950819672 Correct: 38.0 Tested: 61.0
+	 ED07 Acc.: 0.709163346614 Correct: 178.0 Tested: 251.0
+	 ED06 Acc.: 0.736462093863 Correct: 204.0 Tested: 277.0
+	 ED05 Acc.: 0.675324675325 Correct: 260.0 Tested: 385.0
+	 ED04 Acc.: 0.923741007194 Correct: 642.0 Tested: 695.0
+	 ED03 Acc.: 0.830409356725 Correct: 284.0 Tested: 342.0
+	 ED02 Acc.: 0.823529411765 Correct: 126.0 Tested: 153.0
+	 ED01 Acc.: 0.838383838384 Correct: 332.0 Tested: 396.0
+	 ED09 Acc.: 0.897058823529 Correct: 183.0 Tested: 204.0
+	 ED08 Acc.: 0.77027027027 Correct: 171.0 Tested: 222.0
+	 EH10 Acc.: 0.771739130435 Correct: 71.0 Tested: 92.0
+	 EH11 Acc.: 0.563829787234 Correct: 53.0 Tested: 94.0
+	 EH12 Acc.: 0.563636363636 Correct: 31.0 Tested: 55.0
+	 EH13 Acc.: 0.533333333333 Correct: 32.0 Tested: 60.0
+	 EH14 Acc.: 0.4 Correct: 16.0 Tested: 40.0
+	 EH15 Acc.: 0.357142857143 Correct: 5.0 Tested: 14.0
+	 EG99 Acc.: 0.909677419355 Correct: 141.0 Tested: 155.0
+	 EC99 Acc.: 0.65 Correct: 26.0 Tested: 40.0
+	 ED99 Acc.: 0.563265306122 Correct: 138.0 Tested: 245.0
+	 EC11 Acc.: 0.571428571429 Correct: 4.0 Tested: 7.0
+	 EH09 Acc.: 0.809523809524 Correct: 102.0 Tested: 126.0
+	 EH08 Acc.: 0.723076923077 Correct: 47.0 Tested: 65.0
+	 EH03 Acc.: 0.84 Correct: 84.0 Tested: 100.0
+	 EH02 Acc.: 0.90625 Correct: 290.0 Tested: 320.0
+	 EH01 Acc.: 0.833333333333 Correct: 160.0 Tested: 192.0
+	 EH07 Acc.: 0.853658536585 Correct: 175.0 Tested: 205.0
+	 EH06 Acc.: 0.809090909091 Correct: 89.0 Tested: 110.0
+	 EH05 Acc.: 0.75 Correct: 21.0 Tested: 28.0
+	 EH04 Acc.: 0.727272727273 Correct: 48.0 Tested: 66.0
+	 EH99 Acc.: 0.698412698413 Correct: 44.0 Tested: 63.0
+	 EG10 Acc.: 0.797101449275 Correct: 55.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.817546252877
+Macro Acc.(class level) 0.763354473142 
+
+
+test time:  1.358s
+Top- 10
+	 EA99 Acc.: 0.404109589041 Correct: 59.0 Tested: 146.0
+	 EI02 Acc.: 0.752293577982 Correct: 82.0 Tested: 109.0
+	 EI03 Acc.: 0.900523560209 Correct: 344.0 Tested: 382.0
+	 EI01 Acc.: 0.712765957447 Correct: 67.0 Tested: 94.0
+	 EI06 Acc.: 0.796610169492 Correct: 94.0 Tested: 118.0
+	 EI07 Acc.: 0.521739130435 Correct: 12.0 Tested: 23.0
+	 EI04 Acc.: 0.866498740554 Correct: 344.0 Tested: 397.0
+	 EI05 Acc.: 0.732824427481 Correct: 96.0 Tested: 131.0
+	 ED10 Acc.: 0.835227272727 Correct: 294.0 Tested: 352.0
+	 EI08 Acc.: 0.666666666667 Correct: 28.0 Tested: 42.0
+	 EI09 Acc.: 0.892086330935 Correct: 124.0 Tested: 139.0
+	 ED11 Acc.: 0.716814159292 Correct: 81.0 Tested: 113.0
+	 EA08 Acc.: 0.741379310345 Correct: 258.0 Tested: 348.0
+	 EA09 Acc.: 0.905848787447 Correct: 635.0 Tested: 701.0
+	 EA02 Acc.: 0.734210526316 Correct: 279.0 Tested: 380.0
+	 EA03 Acc.: 0.802588996764 Correct: 248.0 Tested: 309.0
+	 EA01 Acc.: 0.722943722944 Correct: 167.0 Tested: 231.0
+	 EA06 Acc.: 0.854599406528 Correct: 288.0 Tested: 337.0
+	 EA07 Acc.: 0.771241830065 Correct: 354.0 Tested: 459.0
+	 EA04 Acc.: 0.783393501805 Correct: 217.0 Tested: 277.0
+	 EA05 Acc.: 0.85409252669 Correct: 480.0 Tested: 562.0
+	 EG07 Acc.: 0.917012448133 Correct: 221.0 Tested: 241.0
+	 EE99 Acc.: 0.8 Correct: 248.0 Tested: 310.0
+	 EE10 Acc.: 0.815668202765 Correct: 177.0 Tested: 217.0
+	 EF99 Acc.: 0.749077490775 Correct: 203.0 Tested: 271.0
+	 EI11 Acc.: 0.848360655738 Correct: 207.0 Tested: 244.0
+	 EI10 Acc.: 0.814814814815 Correct: 44.0 Tested: 54.0
+	 EI12 Acc.: 0.851162790698 Correct: 183.0 Tested: 215.0
+	 EA15 Acc.: 0.545454545455 Correct: 12.0 Tested: 22.0
+	 EA14 Acc.: 0.68 Correct: 68.0 Tested: 100.0
+	 EA11 Acc.: 0.785714285714 Correct: 110.0 Tested: 140.0
+	 EA10 Acc.: 0.900255754476 Correct: 352.0 Tested: 391.0
+	 EA13 Acc.: 0.892857142857 Correct: 75.0 Tested: 84.0
+	 EB99 Acc.: 0.586826347305 Correct: 98.0 Tested: 167.0
+	 EA12 Acc.: 0.810344827586 Correct: 47.0 Tested: 58.0
+	 EE08 Acc.: 0.743362831858 Correct: 84.0 Tested: 113.0
+	 EE09 Acc.: 0.823293172691 Correct: 205.0 Tested: 249.0
+	 EE06 Acc.: 0.835403726708 Correct: 269.0 Tested: 322.0
+	 EE07 Acc.: 0.857142857143 Correct: 96.0 Tested: 112.0
+	 EE04 Acc.: 0.912 Correct: 114.0 Tested: 125.0
+	 EE05 Acc.: 0.807339449541 Correct: 88.0 Tested: 109.0
+	 EE02 Acc.: 0.939194741167 Correct: 1143.0 Tested: 1217.0
+	 EE03 Acc.: 0.926829268293 Correct: 304.0 Tested: 328.0
+	 EE01 Acc.: 0.880597014925 Correct: 590.0 Tested: 670.0
+	 EB01 Acc.: 0.827181208054 Correct: 493.0 Tested: 596.0
+	 EB03 Acc.: 0.893314366999 Correct: 628.0 Tested: 703.0
+	 EB02 Acc.: 0.827255278311 Correct: 431.0 Tested: 521.0
+	 EB05 Acc.: 0.726495726496 Correct: 85.0 Tested: 117.0
+	 EB04 Acc.: 0.854368932039 Correct: 88.0 Tested: 103.0
+	 EB07 Acc.: 0.692857142857 Correct: 97.0 Tested: 140.0
+	 EB06 Acc.: 0.760765550239 Correct: 159.0 Tested: 209.0
+	 EE11 Acc.: 0.775800711744 Correct: 218.0 Tested: 281.0
+	 EB08 Acc.: 0.515151515152 Correct: 17.0 Tested: 33.0
+	 EE13 Acc.: 0.719626168224 Correct: 77.0 Tested: 107.0
+	 EE12 Acc.: 0.831578947368 Correct: 79.0 Tested: 95.0
+	 EI99 Acc.: 0.738738738739 Correct: 82.0 Tested: 111.0
+	 EE14 Acc.: 0.555555555556 Correct: 25.0 Tested: 45.0
+	 EC08 Acc.: 0.692307692308 Correct: 27.0 Tested: 39.0
+	 EC09 Acc.: 0.895604395604 Correct: 163.0 Tested: 182.0
+	 EC01 Acc.: 0.838596491228 Correct: 239.0 Tested: 285.0
+	 EC02 Acc.: 0.837320574163 Correct: 350.0 Tested: 418.0
+	 EC03 Acc.: 0.806763285024 Correct: 167.0 Tested: 207.0
+	 EC04 Acc.: 0.886904761905 Correct: 149.0 Tested: 168.0
+	 EC05 Acc.: 0.82320441989 Correct: 149.0 Tested: 181.0
+	 EC06 Acc.: 0.597701149425 Correct: 52.0 Tested: 87.0
+	 EC07 Acc.: 0.848214285714 Correct: 95.0 Tested: 112.0
+	 EF05 Acc.: 0.838095238095 Correct: 176.0 Tested: 210.0
+	 EF04 Acc.: 0.871428571429 Correct: 122.0 Tested: 140.0
+	 EF06 Acc.: 0.95041322314 Correct: 920.0 Tested: 968.0
+	 EF01 Acc.: 0.855855855856 Correct: 95.0 Tested: 111.0
+	 EF03 Acc.: 0.816091954023 Correct: 71.0 Tested: 87.0
+	 EF02 Acc.: 0.809523809524 Correct: 102.0 Tested: 126.0
+	 EG08 Acc.: 0.666666666667 Correct: 34.0 Tested: 51.0
+	 EG09 Acc.: 0.890909090909 Correct: 49.0 Tested: 55.0
+	 EG04 Acc.: 0.77397260274 Correct: 113.0 Tested: 146.0
+	 EG05 Acc.: 0.827586206897 Correct: 48.0 Tested: 58.0
+	 EG06 Acc.: 0.931034482759 Correct: 81.0 Tested: 87.0
+	 EC10 Acc.: 0.52380952381 Correct: 11.0 Tested: 21.0
+	 EG01 Acc.: 0.893617021277 Correct: 42.0 Tested: 47.0
+	 EG02 Acc.: 0.857142857143 Correct: 60.0 Tested: 70.0
+	 EG03 Acc.: 0.639344262295 Correct: 39.0 Tested: 61.0
+	 ED07 Acc.: 0.717131474104 Correct: 180.0 Tested: 251.0
+	 ED06 Acc.: 0.740072202166 Correct: 205.0 Tested: 277.0
+	 ED05 Acc.: 0.688311688312 Correct: 265.0 Tested: 385.0
+	 ED04 Acc.: 0.928057553957 Correct: 645.0 Tested: 695.0
+	 ED03 Acc.: 0.83918128655 Correct: 287.0 Tested: 342.0
+	 ED02 Acc.: 0.823529411765 Correct: 126.0 Tested: 153.0
+	 ED01 Acc.: 0.843434343434 Correct: 334.0 Tested: 396.0
+	 ED09 Acc.: 0.916666666667 Correct: 187.0 Tested: 204.0
+	 ED08 Acc.: 0.774774774775 Correct: 172.0 Tested: 222.0
+	 EH10 Acc.: 0.771739130435 Correct: 71.0 Tested: 92.0
+	 EH11 Acc.: 0.574468085106 Correct: 54.0 Tested: 94.0
+	 EH12 Acc.: 0.6 Correct: 33.0 Tested: 55.0
+	 EH13 Acc.: 0.533333333333 Correct: 32.0 Tested: 60.0
+	 EH14 Acc.: 0.4 Correct: 16.0 Tested: 40.0
+	 EH15 Acc.: 0.357142857143 Correct: 5.0 Tested: 14.0
+	 EG99 Acc.: 0.909677419355 Correct: 141.0 Tested: 155.0
+	 EC99 Acc.: 0.675 Correct: 27.0 Tested: 40.0
+	 ED99 Acc.: 0.587755102041 Correct: 144.0 Tested: 245.0
+	 EC11 Acc.: 0.571428571429 Correct: 4.0 Tested: 7.0
+	 EH09 Acc.: 0.809523809524 Correct: 102.0 Tested: 126.0
+	 EH08 Acc.: 0.753846153846 Correct: 49.0 Tested: 65.0
+	 EH03 Acc.: 0.84 Correct: 84.0 Tested: 100.0
+	 EH02 Acc.: 0.90625 Correct: 290.0 Tested: 320.0
+	 EH01 Acc.: 0.833333333333 Correct: 160.0 Tested: 192.0
+	 EH07 Acc.: 0.858536585366 Correct: 176.0 Tested: 205.0
+	 EH06 Acc.: 0.827272727273 Correct: 91.0 Tested: 110.0
+	 EH05 Acc.: 0.785714285714 Correct: 22.0 Tested: 28.0
+	 EH04 Acc.: 0.742424242424 Correct: 49.0 Tested: 66.0
+	 EH99 Acc.: 0.714285714286 Correct: 45.0 Tested: 63.0
+	 EG10 Acc.: 0.797101449275 Correct: 55.0 Tested: 69.0
+Total Test Examples 23458 
+Micro Acc.(item level) 0.82585898201
+Macro Acc.(class level) 0.773891540766 
+
+
