@@ -1,3 +1,6 @@
+
+TODO: Add database(.xls and .dat)
+
 # Code Recommendation for R&D Projects (국가R&D과제의 자동 분류코드 추천)
 
 This is document classifier for National R&D Reports in Korea.(Report are in Korean)
